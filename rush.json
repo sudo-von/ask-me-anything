@@ -444,6 +444,11 @@
       "packageName": "shared-ask-me-anything",
       "projectFolder": "shared-ask-me-anything",
       "tags": ["shared"]
+    },
+    {
+      "packageName": "users-ask-me-anything",
+      "projectFolder": "users-ask-me-anything",
+      "tags": ["users", "server"]
     }
   ]
 }
