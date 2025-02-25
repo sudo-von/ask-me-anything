@@ -1,0 +1,125 @@
+openapi: 3.0.0
+info:
+  title: ask-me-anything API
+  version: 1.0.0
+  description: This is the API documentation for the ask-me-anything application
+
+paths:
+  /users:
+    post:
+      summary: Create a new user
+      description: This endpoint allows creating a new user in the system
+      operationId: createUser
+      requestBody:
+        description: User data
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: "#/components/schemas/PostUser"
+      responses:
+        "201":
+          description: User created successfully
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "400":
+          description: Bad request
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Server error
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+components:
+  schemas:
+    Error:
+      type: object
+      required:
+        - detail
+        - status
+        - title
+      properties:
+        detail:
+          type: string
+          description: A detailed explanation of the error
+        status:
+          type: number
+          description: The HTTP status code for the error
+        title:
+          type: string
+          description: A short description of the error
+
+    PostUser:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          required:
+            - type
+            - id
+            - attributes
+          properties:
+            type:
+              type: string
+              example: user
+            id:
+              type: integer
+              description: Unique ID of the new user
+            attributes:
+              type: object
+              required:
+                - name
+                - password
+                - username
+              properties:
+                name:
+                  type: string
+                  description: The user's name
+                password:
+                  type: string
+                  description: The user's password
+                username:
+                  type: string
+                  description: The user's username
+    User:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          required:
+            - type
+            - attributes
+          properties:
+            type:
+              type: string
+              example: user
+            id:
+              type: integer
+              description: Unique ID of the user
+            attributes:
+              type: object
+              required:
+                - id
+                - avatar
+                - name
+                - username
+              properties:
+                avatar:
+                  type: string
+                  description: The user's avatar
+                name:
+                  type: string
+                  description: The user's name
+                username:
+                  type: string
+                  description: The user's username

@@ -3,9 +3,13 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "generate:types": "openapi-typescript openapi.yaml -o ./src/types.d.ts"
   },
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "openapi-typescript": "~7.6.1",
+    "typescript": "~5.7.3"
+  }
 }
