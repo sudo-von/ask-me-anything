@@ -441,14 +441,14 @@
     //   "tags": [ "tools" ]
     // }
     {
-      "packageName": "shared-ask-me-anything",
-      "projectFolder": "shared-ask-me-anything",
-      "tags": ["shared"]
+      "packageName": "@sudo-von/ask-me-anything-core",
+      "projectFolder": "ask-me-anything-core",
+      "tags": ["core"]
     },
     {
-      "packageName": "users-ask-me-anything",
-      "projectFolder": "users-ask-me-anything",
-      "tags": ["users", "server"]
+      "packageName": "@sudo-von/ask-me-anything-api",
+      "projectFolder": "ask-me-anything-api",
+      "tags": ["api"]
     }
   ]
 }

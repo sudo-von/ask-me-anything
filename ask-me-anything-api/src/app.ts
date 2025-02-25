@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { components } from 'shared-ask-me-anything/src/types';
+import { components } from '@sudo-von/ask-me-anything-core';
 
 type User = components['schemas']['User']['data']['attributes'];
 

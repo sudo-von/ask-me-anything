@@ -1,9 +1,9 @@
 {
-  "name": "shared-ask-me-anything",
+  "name": "@sudo-von/ask-me-anything-core",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/types/schema.d.ts",
   "scripts": {
-    "generate:types": "openapi-typescript openapi.yaml -o ./src/types.d.ts"
+    "generate:types": "openapi-typescript openapi.yaml -o src/types/schema.d.ts"
   },
   "author": "",
   "license": "ISC",

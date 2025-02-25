@@ -1,9 +1,9 @@
 {
-  "name": "users-ask-me-anything",
+  "name": "@sudo-von/ask-me-anything-api",
   "version": "1.0.0",
   "scripts": {
     "start:build": "tsc",
-    "start:development": "ts-node-dev --respawn --transpile-only src/app.ts",
+    "start:development": "ts-node-dev --respawn src/app.ts",
     "start:production": "node dist/app.js"
   },
   "author": "",
@@ -14,9 +14,10 @@
     "@types/express": "~5.0.0",
     "@types/node": "~22.13.5",
     "ts-node-dev": "~2.0.0",
-    "shared-ask-me-anything": "workspace:*"
+    "@sudo-von/ask-me-anything-core": "workspace:*"
   },
   "dependencies": {
-    "express": "~4.21.2"
+    "express": "~4.21.2",
+    "express-openapi": "~12.1.3"
   }
 }
