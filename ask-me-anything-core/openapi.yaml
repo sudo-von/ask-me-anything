@@ -5,7 +5,7 @@ info:
   description: This is the API documentation for the ask-me-anything application
 
 paths:
-  /users:
+  /user:
     post:
       summary: Create a new user
       description: This endpoint allows creating a new user in the system

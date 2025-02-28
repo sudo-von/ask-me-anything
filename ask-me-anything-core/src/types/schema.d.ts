@@ -4,7 +4,7 @@
  */
 
 export interface paths {
-    "/users": {
+    "/user": {
         parameters: {
             query?: never;
             header?: never;
