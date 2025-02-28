@@ -119,10 +119,8 @@ components:
                 - type: object
                   properties:
                     details:
-                      type: object
                       $ref: "#/components/schemas/CreateUserDetails"
                     metrics:
-                      type: object
                       $ref: "#/components/schemas/CreateUserMetrics"
     CreateUserDetails:
       type: object
@@ -139,7 +137,6 @@ components:
               type: string
               example: createUserDetails
             attributes:
-              type: object
               $ref: "#/components/schemas/UserDetails"
     CreateUserMetrics:
       type: object
@@ -156,7 +153,6 @@ components:
               type: string
               example: createUserMetrics
             attributes:
-              type: object
               $ref: "#/components/schemas/UserMetrics"
     DetailedUser:
       type: object
@@ -178,10 +174,8 @@ components:
                 - type: object
                   properties:
                     details:
-                      type: object
                       $ref: "#/components/schemas/UserDetails"
                     metrics:
-                      type: object
                       $ref: "#/components/schemas/UserMetrics"
     UpdateDetailedUser:
       type: object
@@ -203,10 +197,8 @@ components:
                 - type: object
                   properties:
                     details:
-                      type: object
                       $ref: "#/components/schemas/UpdateUserDetails"
                     metrics:
-                      type: object
                       $ref: "#/components/schemas/UpdateUserMetrics"
     UpdateUser:
       type: object
@@ -254,7 +246,6 @@ components:
               type: string
               example: updateUserDetails
             attributes:
-              type: object
               $ref: "#/components/schemas/UserDetails"
     UpdateUserMetrics:
       type: object
@@ -271,7 +262,6 @@ components:
               type: string
               example: updateUserMetrics
             attributes:
-              type: object
               $ref: "#/components/schemas/UserMetrics"
     User:
       type: object
@@ -296,7 +286,6 @@ components:
                 - id
                 - avatar
                 - name
-                - password
                 - username
               properties:
                 avatar:
@@ -305,9 +294,6 @@ components:
                 name:
                   type: string
                   description: The user's name
-                password:
-                  type: string
-                  description: The user's password
                 username:
                   type: string
                   description: The user's username
@@ -363,12 +349,3 @@ components:
                 views:
                   type: string
                   description: The user's total number of views
-    SecureUser:
-      type: object
-      allOf:
-        - $ref: "#/components/schemas/DetailedUser"
-        - type: object
-          properties:
-            password:
-              type: null
-              description: "Password is omitted for security reasons"

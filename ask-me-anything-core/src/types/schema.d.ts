@@ -135,8 +135,6 @@ export interface components {
                     avatar: string;
                     /** @description The user's name */
                     name: string;
-                    /** @description The user's password */
-                    password: string;
                     /** @description The user's username */
                     username: string;
                 };
@@ -165,10 +163,6 @@ export interface components {
                     views: string;
                 };
             };
-        };
-        SecureUser: components["schemas"]["DetailedUser"] & {
-            /** @description Password is omitted for security reasons */
-            password?: Record<string, never>;
         };
     };
     responses: never;
