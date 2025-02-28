@@ -50,6 +50,7 @@ export interface components {
                 };
             };
         };
+        CreateUserMetrics: components["schemas"]["UserMetrics"];
         UpdateUser: {
             data: {
                 /** @example userUpdate */
@@ -66,6 +67,7 @@ export interface components {
                 };
             };
         };
+        UpdateUserMetrics: components["schemas"]["UserMetrics"];
         User: {
             data: {
                 /** @example user */
@@ -81,6 +83,20 @@ export interface components {
                     password: string;
                     /** @description The user's username */
                     username: string;
+                };
+            };
+        };
+        UserMetrics: {
+            data: {
+                /** @example userMetrics */
+                type: string;
+                attributes: {
+                    /** @description The user's total number of answers */
+                    answers: string;
+                    /** @description The user's total number of questions */
+                    questions: string;
+                    /** @description The user's total number of views */
+                    views: string;
                 };
             };
         };
