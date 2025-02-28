@@ -36,12 +36,10 @@ export interface components {
             /** @description A short description of the error */
             title: string;
         };
-        PostUser: {
+        CreateUser: {
             data: {
-                /** @example user */
+                /** @example userCreate */
                 type: string;
-                /** @description Unique ID of the new user */
-                id: number;
                 attributes: {
                     /** @description The user's name */
                     name: string;
@@ -49,6 +47,22 @@ export interface components {
                     password: string;
                     /** @description The user's username */
                     username: string;
+                };
+            };
+        };
+        UpdateUser: {
+            data: {
+                /** @example userUpdate */
+                type: string;
+                attributes: {
+                    /** @description The user's avatar */
+                    avatar?: string;
+                    /** @description The user's name */
+                    name?: string;
+                    /** @description The user's password */
+                    password: string;
+                    /** @description The user's username */
+                    username?: string;
                 };
             };
         };
@@ -63,6 +77,8 @@ export interface components {
                     avatar: string;
                     /** @description The user's name */
                     name: string;
+                    /** @description The user's password */
+                    password: string;
                     /** @description The user's username */
                     username: string;
                 };
@@ -87,7 +103,7 @@ export interface operations {
         /** @description User data */
         requestBody?: {
             content: {
-                "application/vnd.api+json": components["schemas"]["PostUser"];
+                "application/vnd.api+json": components["schemas"]["CreateUser"];
             };
         };
         responses: {

@@ -15,7 +15,7 @@ paths:
         content:
           application/vnd.api+json:
             schema:
-              $ref: "#/components/schemas/PostUser"
+              $ref: "#/components/schemas/CreateUser"
       responses:
         "201":
           description: User created successfully
@@ -55,7 +55,7 @@ components:
           type: string
           description: A short description of the error
 
-    PostUser:
+    CreateUser:
       type: object
       required:
         - data
@@ -64,15 +64,11 @@ components:
           type: object
           required:
             - type
-            - id
             - attributes
           properties:
             type:
               type: string
-              example: user
-            id:
-              type: integer
-              description: Unique ID of the new user
+              example: userCreate
             attributes:
               type: object
               required:
@@ -80,6 +76,37 @@ components:
                 - password
                 - username
               properties:
+                name:
+                  type: string
+                  description: The user's name
+                password:
+                  type: string
+                  description: The user's password
+                username:
+                  type: string
+                  description: The user's username
+    UpdateUser:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          required:
+            - type
+            - attributes
+          properties:
+            type:
+              type: string
+              example: userUpdate
+            attributes:
+              type: object
+              required:
+                - password
+              properties:
+                avatar:
+                  type: string
+                  description: The user's avatar
                 name:
                   type: string
                   description: The user's name
@@ -112,6 +139,7 @@ components:
                 - id
                 - avatar
                 - name
+                - password
                 - username
               properties:
                 avatar:
@@ -120,6 +148,9 @@ components:
                 name:
                   type: string
                   description: The user's name
+                password:
+                  type: string
+                  description: The user's password
                 username:
                   type: string
                   description: The user's username
