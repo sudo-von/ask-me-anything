@@ -38,7 +38,7 @@ export interface components {
         };
         CreateUser: {
             data: {
-                /** @example userCreate */
+                /** @example createUser */
                 type: string;
                 attributes: {
                     /** @description The user's name */
@@ -50,10 +50,23 @@ export interface components {
                 };
             };
         };
-        CreateUserMetrics: components["schemas"]["UserMetrics"];
+        CreateUserDetails: {
+            data: {
+                /** @example createUserDetails */
+                type: string;
+                attributes: components["schemas"]["UserDetails"];
+            };
+        };
+        CreateUserMetrics: {
+            data: {
+                /** @example createUserMetrics */
+                type: string;
+                attributes: components["schemas"]["UserMetrics"];
+            };
+        };
         UpdateUser: {
             data: {
-                /** @example userUpdate */
+                /** @example updateUser */
                 type: string;
                 attributes: {
                     /** @description The user's avatar */
@@ -67,7 +80,20 @@ export interface components {
                 };
             };
         };
-        UpdateUserMetrics: components["schemas"]["UserMetrics"];
+        UpdateUserDetails: {
+            data: {
+                /** @example updateUserDetails */
+                type: string;
+                attributes: components["schemas"]["UserDetails"];
+            };
+        };
+        UpdateUserMetrics: {
+            data: {
+                /** @example updateUserMetrics */
+                type: string;
+                attributes: components["schemas"]["UserMetrics"];
+            };
+        };
         User: {
             data: {
                 /** @example user */
@@ -83,6 +109,16 @@ export interface components {
                     password: string;
                     /** @description The user's username */
                     username: string;
+                };
+            };
+        };
+        UserDetails: {
+            data: {
+                /** @example userDetails */
+                type: string;
+                attributes: {
+                    /** @description The user's biography */
+                    biography: string;
                 };
             };
         };

@@ -68,7 +68,7 @@ components:
           properties:
             type:
               type: string
-              example: userCreate
+              example: createUser
             attributes:
               type: object
               required:
@@ -85,8 +85,40 @@ components:
                 username:
                   type: string
                   description: The user's username
+    CreateUserDetails:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          required:
+            - type
+            - attributes
+          properties:
+            type:
+              type: string
+              example: createUserDetails
+            attributes:
+              type: object
+              $ref: "#/components/schemas/UserDetails"
     CreateUserMetrics:
-      $ref: "#/components/schemas/UserMetrics"
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          required:
+            - type
+            - attributes
+          properties:
+            type:
+              type: string
+              example: createUserMetrics
+            attributes:
+              type: object
+              $ref: "#/components/schemas/UserMetrics"
     UpdateUser:
       type: object
       required:
@@ -100,7 +132,7 @@ components:
           properties:
             type:
               type: string
-              example: userUpdate
+              example: updateUser
             attributes:
               type: object
               required:
@@ -118,8 +150,40 @@ components:
                 username:
                   type: string
                   description: The user's username
+    UpdateUserDetails:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          required:
+            - type
+            - attributes
+          properties:
+            type:
+              type: string
+              example: updateUserDetails
+            attributes:
+              type: object
+              $ref: "#/components/schemas/UserDetails"
     UpdateUserMetrics:
-      $ref: "#/components/schemas/UserMetrics"
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          required:
+            - type
+            - attributes
+          properties:
+            type:
+              type: string
+              example: updateUserMetrics
+            attributes:
+              type: object
+              $ref: "#/components/schemas/UserMetrics"
     User:
       type: object
       required:
@@ -158,6 +222,28 @@ components:
                 username:
                   type: string
                   description: The user's username
+    UserDetails:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          required:
+            - type
+            - attributes
+          properties:
+            type:
+              type: string
+              example: userDetails
+            attributes:
+              type: object
+              required:
+                - biography
+              properties:
+                biography:
+                  type: string
+                  description: The user's biography
     UserMetrics:
       type: object
       required:
