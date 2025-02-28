@@ -1,13 +1,13 @@
 {
   "name": "@sudo-von/ask-me-anything-core",
   "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
   "main": "src/types/schema.d.ts",
   "scripts": {
     "generate:types": "openapi-typescript openapi.yaml -o src/types/schema.d.ts"
   },
-  "author": "",
-  "license": "ISC",
-  "description": "",
   "devDependencies": {
     "openapi-typescript": "~7.6.1",
     "typescript": "~5.7.3"
