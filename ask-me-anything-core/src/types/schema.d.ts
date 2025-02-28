@@ -166,6 +166,10 @@ export interface components {
                 };
             };
         };
+        SecureUser: components["schemas"]["DetailedUser"] & {
+            /** @description Password is omitted for security reasons */
+            password?: Record<string, never>;
+        };
     };
     responses: never;
     parameters: never;
@@ -185,7 +189,13 @@ export interface operations {
         /** @description User data */
         requestBody?: {
             content: {
-                "application/vnd.api+json": components["schemas"]["CreateUser"];
+                "application/vnd.api+json": {
+                    data: {
+                        /** @example createUser */
+                        type: string;
+                        attributes: components["schemas"]["CreateUser"];
+                    };
+                };
             };
         };
         responses: {

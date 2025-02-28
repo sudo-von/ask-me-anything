@@ -15,7 +15,21 @@ paths:
         content:
           application/vnd.api+json:
             schema:
-              $ref: "#/components/schemas/CreateUser"
+              type: object
+              required:
+                - data
+              properties:
+                data:
+                  type: object
+                  required:
+                    - type
+                    - attributes
+                  properties:
+                    type:
+                      type: string
+                      example: createUser
+                    attributes:
+                      $ref: "#/components/schemas/CreateUser"
       responses:
         "201":
           description: User created successfully
@@ -349,3 +363,12 @@ components:
                 views:
                   type: string
                   description: The user's total number of views
+    SecureUser:
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/DetailedUser"
+        - type: object
+          properties:
+            password:
+              type: null
+              description: "Password is omitted for security reasons"
