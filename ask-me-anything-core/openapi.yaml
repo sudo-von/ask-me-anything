@@ -85,6 +85,31 @@ components:
                 username:
                   type: string
                   description: The user's username
+    CreateDetailedUser:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          required:
+            - type
+            - attributes
+          properties:
+            type:
+              type: string
+              example: createDetailedUser
+            attributes:
+              allOf:
+                - $ref: "#/components/schemas/CreateUser"
+                - type: object
+                  properties:
+                    details:
+                      type: object
+                      $ref: "#/components/schemas/CreateUserDetails"
+                    metrics:
+                      type: object
+                      $ref: "#/components/schemas/CreateUserMetrics"
     CreateUserDetails:
       type: object
       required:
@@ -119,6 +144,56 @@ components:
             attributes:
               type: object
               $ref: "#/components/schemas/UserMetrics"
+    DetailedUser:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          required:
+            - type
+            - attributes
+          properties:
+            type:
+              type: string
+              example: detailedUser
+            attributes:
+              allOf:
+                - $ref: "#/components/schemas/User"
+                - type: object
+                  properties:
+                    details:
+                      type: object
+                      $ref: "#/components/schemas/UserDetails"
+                    metrics:
+                      type: object
+                      $ref: "#/components/schemas/UserMetrics"
+    UpdateDetailedUser:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          required:
+            - type
+            - attributes
+          properties:
+            type:
+              type: string
+              example: updateDetailedUser
+            attributes:
+              allOf:
+                - $ref: "#/components/schemas/UpdateUser"
+                - type: object
+                  properties:
+                    details:
+                      type: object
+                      $ref: "#/components/schemas/UpdateUserDetails"
+                    metrics:
+                      type: object
+                      $ref: "#/components/schemas/UpdateUserMetrics"
     UpdateUser:
       type: object
       required:

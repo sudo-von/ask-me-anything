@@ -50,6 +50,16 @@ export interface components {
                 };
             };
         };
+        CreateDetailedUser: {
+            data: {
+                /** @example createDetailedUser */
+                type: string;
+                attributes: components["schemas"]["CreateUser"] & {
+                    details?: components["schemas"]["CreateUserDetails"];
+                    metrics?: components["schemas"]["CreateUserMetrics"];
+                };
+            };
+        };
         CreateUserDetails: {
             data: {
                 /** @example createUserDetails */
@@ -62,6 +72,26 @@ export interface components {
                 /** @example createUserMetrics */
                 type: string;
                 attributes: components["schemas"]["UserMetrics"];
+            };
+        };
+        DetailedUser: {
+            data: {
+                /** @example detailedUser */
+                type: string;
+                attributes: components["schemas"]["User"] & {
+                    details?: components["schemas"]["UserDetails"];
+                    metrics?: components["schemas"]["UserMetrics"];
+                };
+            };
+        };
+        UpdateDetailedUser: {
+            data: {
+                /** @example updateDetailedUser */
+                type: string;
+                attributes: components["schemas"]["UpdateUser"] & {
+                    details?: components["schemas"]["UpdateUserDetails"];
+                    metrics?: components["schemas"]["UpdateUserMetrics"];
+                };
             };
         };
         UpdateUser: {
