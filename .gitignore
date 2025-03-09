@@ -35,6 +35,7 @@ bower_components/
 build/Release/
 
 # Dependency directories
+ask-me-anything-database/
 node_modules/
 jspm_packages/
 
