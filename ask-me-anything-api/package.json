@@ -14,13 +14,16 @@
     "express-openapi": "~12.1.3",
     "express-openapi-validator": "~5.4.4",
     "sequelize": "~6.37.6",
-    "sqlite3": "~5.1.7"
+    "sqlite3": "~5.1.7",
+    "sequelize-typescript": "~2.1.6"
   },
   "devDependencies": {
     "@sudo-von/ask-me-anything-core": "workspace:*",
     "@types/express": "~5.0.0",
     "@types/node": "~22.13.5",
     "tsx": "~4.19.3",
-    "typescript": "~5.7.3"
+    "typescript": "~5.7.3",
+    "@types/sequelize": "~4.28.20",
+    "@types/validator": "~13.12.2"
   }
 }
