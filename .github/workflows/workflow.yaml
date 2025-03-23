@@ -37,12 +37,12 @@ jobs:
         if: github.ref == 'refs/heads/master'
       - name: Build Image (Development)
         run: |
-          docker build -t ask-me-anything:latest .
+          docker build -t ask-me-anything-api:latest .
       - name: Login to Amazon ECR (Development)
         uses: aws-actions/amazon-ecr-login@v1
       - name: Tag Image for ECR (Development)
         run: |
-          docker tag my-app-image:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/ask-me-anything-api-ecr-repository-development:latest
+          docker tag ask-me-anything-api:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/ask-me-anything-api-ecr-repository-development:latest
       - name: Push Image to ECR
         run: |
           docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/ask-me-anything-api-ecr-repository-development:latest
