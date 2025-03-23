@@ -1,0 +1,40 @@
+terraform {
+  required_version = ">= 1.2.0"
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "4.16.0"
+    }
+  }
+}
+
+provider "aws" {
+  region = "us-east-1"
+}
+
+resource "aws_security_group" "ask_me_anything_api_security_group_development" {
+  name        = "ask_me_anything_api_security_group_development"
+  description = "Security group that allows inbound HTTP traffic on port 80"
+
+  ingress {
+    description = "Allow incoming HTTP traffic from any IP (0.0.0.0/0) on port 80"
+    cidr_blocks = ["0.0.0.0/0"]
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+  }
+
+  egress {
+    description = "Allow all outbound traffic to any IP and port"
+    cidr_blocks = ["0.0.0.0/0"]
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+  }
+}
+
+resource "aws_instance" "ask_me_anything_api_instance_development" {
+  ami                    = "ami-08b5b3a93ed654d19"
+  instance_type          = "t2.micro"
+  vpc_security_group_ids = [aws_security_group.ask_me_anything_api_security_group_development.id]
+}
