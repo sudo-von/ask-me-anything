@@ -21,6 +21,10 @@ jobs:
           role-to-assume: arn:aws:iam::045619769161:role/GitHubActionsRole
           role-session-name: GitHub_to_AWS_via_FederatedOIDC
           aws-region: us-east-1
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.2.0
       - name: Init (Development)
         run: terraform init
         working-directory: ./ask-me-anything-api/src/infrastructure/cloud/development
