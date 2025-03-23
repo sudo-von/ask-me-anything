@@ -1,8 +1,8 @@
 terraform {
   required_version = ">= 1.2.0"
   backend "s3" {
-    bucket = "ask-me-anything-state-bucket"
-    key    = "ask-me-anything-api/main.tfstate"
+    bucket = "ask_me_anything_state_bucket"
+    key    = "development/api-infrastructure.tfstate"
     region = "us-east-1"
   }
   required_providers {
@@ -18,18 +18,17 @@ provider "aws" {
 }
 
 resource "aws_instance" "ask_me_anything_api_instance_development" {
-  iam_instance_profile   = "ask_me_anything_api_ec2_role_development"
   ami                    = "ami-08b5b3a93ed654d19"
+  iam_instance_profile   = "ask_me_anything_api_ec2_role_development"
   instance_type          = "t2.micro"
-  vpc_security_group_ids = [aws_security_group.ask_me_anything_api_security_group_development.id]
-
-  user_data = <<-EOF
+  user_data              = <<-EOF
               #!/bin/bash
               yum update -y
               yum install -y docker
               service docker start
               systemctl enable docker
               EOF
+  vpc_security_group_ids = [aws_security_group.ask_me_anything_api_security_group_development.id]
 }
 
 resource "aws_security_group" "ask_me_anything_api_security_group_development" {
@@ -60,6 +59,7 @@ resource "aws_security_group" "ask_me_anything_api_security_group_development" {
 resource "aws_ecr_repository" "ask_me_anything_api_ecr_repository_development" {
   name                 = "ask-me-anything-api-ecr-repository-development"
   image_tag_mutability = "MUTABLE"
+
   lifecycle {
     prevent_destroy = false
   }

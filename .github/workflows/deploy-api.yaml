@@ -1,0 +1,47 @@
+name: Deploy API
+
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy-api:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Configure credentials
+        uses: aws-actions/configure-aws-credentials@v1.7.0
+        with:
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/${{secrets.AWS_ROLE}}
+          role-session-name: FederatedOIDC
+          aws-region: us-east-1
+      - name: Build Image (Development)
+        run: |
+          docker build -t ask-me-anything-api:latest .
+      - name: Login to ECR (Development)
+        uses: aws-actions/amazon-ecr-login@v1
+        with:
+          mask-password: true
+          registry-type: private
+          skip-logout: false
+      - name: Tag Image (Development)
+        run: |
+          docker tag ask-me-anything-api:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/ask-me-anything-api-ecr-repository-development:latest
+      - name: Push Image (Development)
+        run: |
+          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/ask-me-anything-api-ecr-repository-development:latest
+      - name: Update EC2 (Development)
+        run: |
+          aws ssm send-command \
+            --instance-ids "${{ secrets.AWS_DEVELOPMENT_INSTANCE_ID }}" \
+            --document-name "AWS-RunShellScript" \
+            --parameters 'commands=[
+              "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com",
+              "docker pull ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/ask-me-anything-api-ecr-repository-development:latest",
+              "docker run -d -p 3000:3000 ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/ask-me-anything-api-ecr-repository-development:latest"
+            ]' \
+            --region us-east-1
