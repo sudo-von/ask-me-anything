@@ -18,7 +18,7 @@ jobs:
       - name: configure aws credentials
         uses: aws-actions/configure-aws-credentials@v1.7.0
         with:
-          role-to-assume: arn:aws:iam::045619769161:role/GitHubActionsRole
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/GitHubActionsRole
           role-session-name: GitHub_to_AWS_via_FederatedOIDC
           aws-region: us-east-1
       - name: Set up Terraform
@@ -35,3 +35,14 @@ jobs:
         run: terraform apply -auto-approve
         working-directory: ./ask-me-anything-api/src/infrastructure/cloud/development
         if: github.ref == 'refs/heads/master'
+      - name: Build Image (Development)
+        run: |
+          docker build -t ask-me-anything:latest .
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v1
+      - name: Tag Docker Image for ECR
+        run: |
+          docker tag my-app-image:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/ask-me-anything-api-ecr-repository-development:latest
+      - name: Push Docker Image to ECR
+        run: |
+          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/ask-me-anything-api-ecr-repository-development:latest

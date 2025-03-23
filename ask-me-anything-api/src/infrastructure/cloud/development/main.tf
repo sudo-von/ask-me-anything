@@ -38,3 +38,11 @@ resource "aws_instance" "ask_me_anything_api_instance_development" {
   instance_type          = "t2.micro"
   vpc_security_group_ids = [aws_security_group.ask_me_anything_api_security_group_development.id]
 }
+
+resource "aws_ecr_repository" "ask_me_anything_api_ecr_repository_development" {
+  name                 = "ask-me-anything-api-ecr-repository-development"
+  image_tag_mutability = "MUTABLE"
+  lifecycle {
+    prevent_destroy = false
+  }
+}
