@@ -1,0 +1,7 @@
+.git
+.github
+.rush
+ask-me-anything-database
+common/temp
+dist
+node_modules
