@@ -37,6 +37,12 @@ resource "aws_security_group" "ask_me_anything_api_security_group_development" {
     to_port     = 0
     protocol    = "-1"
   }
+
+  lifecycle {
+    prevent_destroy = false
+  }
+
+  depends_on = [aws_instance.ask_me_anything_api_instance_development]
 }
 
 resource "aws_instance" "ask_me_anything_api_instance_development" {
