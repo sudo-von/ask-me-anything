@@ -20,13 +20,13 @@ provider "aws" {
 
 resource "aws_security_group" "ask_me_anything_api_security_group_development" {
   name        = "ask_me_anything_api_security_group_development"
-  description = "Security group that allows inbound HTTP traffic on port 80"
+  description = "Security group that allows inbound HTTP traffic on port 3000"
 
   ingress {
-    description = "Allow incoming HTTP traffic from any IP (0.0.0.0/0) on port 80"
+    description = "Allow incoming HTTP traffic from any IP (0.0.0.0/0) on port 3000"
     cidr_blocks = ["0.0.0.0/0"]
-    from_port   = 80
-    to_port     = 80
+    from_port   = 3000
+    to_port     = 3000
     protocol    = "tcp"
   }
 
