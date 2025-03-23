@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "license": "ISC",
-  "author": "",
+  "author": "sudo-von",
   "main": "src/types/schema.d.ts",
   "scripts": {
     "build": "npm run generate:types",
