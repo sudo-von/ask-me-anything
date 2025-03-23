@@ -13,5 +13,5 @@ provider "aws" {
 }
 
 resource "aws_s3_bucket" "ask_me_anything_state_bucket" {
-  bucket = "ask_me_anything_state_bucket"
+  bucket = "ask-me-anything-state-bucket"
 }

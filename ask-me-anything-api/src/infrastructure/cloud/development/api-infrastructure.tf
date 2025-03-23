@@ -1,7 +1,7 @@
 terraform {
   required_version = ">= 1.2.0"
   backend "s3" {
-    bucket = "ask_me_anything_state_bucket"
+    bucket = "ask-me-anything-state-bucket"
     key    = "development/api-infrastructure.tfstate"
     region = "us-east-1"
   }
