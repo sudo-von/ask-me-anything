@@ -22,6 +22,14 @@ resource "aws_instance" "ask_me_anything_api_instance_development" {
   ami                    = "ami-08b5b3a93ed654d19"
   instance_type          = "t2.micro"
   vpc_security_group_ids = [aws_security_group.ask_me_anything_api_security_group_development.id]
+
+  user_data = <<-EOF
+              #!/bin/bash
+              yum update -y
+              yum install -y docker
+              service docker start
+              systemctl enable docker
+              EOF
 }
 
 resource "aws_security_group" "ask_me_anything_api_security_group_development" {
