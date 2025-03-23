@@ -6,6 +6,7 @@
   "author": "",
   "main": "src/types/schema.d.ts",
   "scripts": {
+    "build": "npm run generate:types",
     "generate:types": "openapi-typescript openapi.yaml -o src/types/schema.d.ts"
   },
   "devDependencies": {
