@@ -13,7 +13,6 @@ export type UpdateUserDetails = components['schemas']['UpdateUserDetails'];
 export type UpdateUserMetrics = components['schemas']['UpdateUserMetrics'];
 
 export type User = components['schemas']['User'];
+export type UserCredentials = components['schemas']['UserCredentials'];
 export type UserDetails = components['schemas']['UserDetails'];
 export type UserMetrics = components['schemas']['UserMetrics'];
-
-export type SecureUser = components['schemas']['SecureUser'];
