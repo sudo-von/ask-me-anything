@@ -6,8 +6,8 @@
   "author": "",
   "scripts": {
     "start:build": "tsc",
-    "start:development": "tsx watch src/app.ts",
-    "start:production": "node dist/app.js"
+    "start:development": "tsx watch src/main.ts",
+    "start:production": "node dist/main.js"
   },
   "dependencies": {
     "express": "~4.21.2",
