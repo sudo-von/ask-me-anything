@@ -1,5 +1,10 @@
 terraform {
   required_version = ">= 1.2.0"
+  backend "s3" {
+    bucket = "ask-me-anything-state-bucket"
+    key    = "ask-me-anything-api/main.tfstate"
+    region = "us-east-1"
+  }
   required_providers {
     aws = {
       source  = "hashicorp/aws"
@@ -11,6 +16,7 @@ terraform {
 provider "aws" {
   region = "us-east-1"
 }
+
 
 resource "aws_security_group" "ask_me_anything_api_security_group_development" {
   name        = "ask_me_anything_api_security_group_development"
