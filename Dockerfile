@@ -17,7 +17,7 @@ FROM node:20.14-alpine AS runner
 WORKDIR /ask-me-anything-api/
 
 COPY --from=builder /ask-me-anything/common/deploy/ask-me-anything-api .
-COPY --from=builder /ask-me-anything/common/deploy/node_modules /ask-me-anything-api/node_modules
+COPY --from=builder /ask-me-anything/common/deploy/ask-me-anything-api/node_modules /ask-me-anything-api/node_modules
 
 EXPOSE 3000
 
