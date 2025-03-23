@@ -7,10 +7,12 @@ export const start = () => {
 
     app.get('/', (_req, res) => {
       res.json({ message: 'Hello World' });
-
     });
+
     app.listen(port, () => console.log(`🤖 Handlers are running on {port}:${port}`));
-  } catch (error) {
-    console.error('❌ Failed to start the handlers.', error);
+  } catch (e) {
+    const error = e as Error;
+    error.message = `❌ Failed to start the handlers: ${error.message}.`;
+    throw error;
   }
 };

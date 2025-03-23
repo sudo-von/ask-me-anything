@@ -2,20 +2,27 @@ import * as Database from '../database';
 import * as Handlers from '../handlers';
 
 export const start = async () => {
-  console.log('💾 Trying to establish a database connection.');
-  await Database.start();
+  try {
+    console.log('💾 Trying to establish a database connection.');
+    await Database.start();
 
-  console.log('🤖 Trying to initialize the handlers.');
-  Handlers.start();
+    console.log('🤖 Trying to initialize the handlers.');
+    Handlers.start();
+  } catch (e) {
+    const error = e as Error;
+    error.message = `❌ Failed to start the application: ${error.message}`;
+    throw error;
+  }
 };
 
-export const close = async (error: unknown) => {
+export const release = async () => {
   try {
-    console.error('❌ Failed to start the application. Attempting to release resources.', error);
-
-    console.log('🖥️ Attempting to release resources.');
+    console.log('💻 Attempting to release resources.');
     await Database.close();
-  } catch (error) {
-    console.error('❌ Failed to release resources.', error);
+    console.log('💻 Resources released successfully.');
+  } catch (e) {
+    const error = e as Error;
+    error.message = `❌ Failed to release resources: ${error.message}.`;
+    throw error;
   }
 }

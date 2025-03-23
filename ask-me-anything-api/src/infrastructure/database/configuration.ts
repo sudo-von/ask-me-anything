@@ -15,8 +15,10 @@ export const start = async () => {
 
     await connection.authenticate();
     console.log('💾 Database connection established successfully.');
-  } catch (error) {
-    console.error('❌ Failed to start the database connection.', error);
+  } catch (e) {
+    const error = e as Error;
+    error.message = `❌ Failed to start the database connection: ${error.message}.`;
+    throw error;
   }
 };
 
@@ -29,7 +31,9 @@ export const close = async () => {
 
     await connection.close();
     console.log('💾 Database connection closed successfully.');
-  } catch (error) {
-    console.error('❌ Failed to close the database connection.', error);
+  } catch (e) {
+    const error = e as Error;
+    error.message = `❌ Failed to close the database connection: ${error.message}.`;
+    throw error;
   }
 };
