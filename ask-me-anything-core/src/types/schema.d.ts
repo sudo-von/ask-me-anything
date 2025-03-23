@@ -4,7 +4,27 @@
  */
 
 export interface paths {
-    "/user": {
+    "/authentication/signin": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Sign in a user
+         * @description User authentication with username and password
+         */
+        post: operations["signin"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/authentication/signup": {
         parameters: {
             query?: never;
             header?: never;
@@ -15,9 +35,9 @@ export interface paths {
         put?: never;
         /**
          * Create a new user
-         * @description This endpoint allows creating a new user in the system
+         * @description User creation is temporarily restricted to a single user per system
          */
-        post: operations["createUser"];
+        post: operations["signup"];
         delete?: never;
         options?: never;
         head?: never;
@@ -35,6 +55,19 @@ export interface components {
             status: number;
             /** @description A short description of the error */
             title: string;
+        };
+        AuthenticationToken: {
+            data: {
+                /** @example authenticationToken */
+                type: string;
+                attributes: {
+                    /**
+                     * @description The authentication token for the user
+                     * @example token
+                     */
+                    token: string;
+                };
+            };
         };
         CreateUser: {
             data: {
@@ -140,6 +173,21 @@ export interface components {
                 };
             };
         };
+        UserCredentials: {
+            data: {
+                /** @example userCredentials */
+                type: string;
+                attributes: {
+                    /** @example username */
+                    username: string;
+                    /**
+                     * Format: password
+                     * @example password
+                     */
+                    password: string;
+                };
+            };
+        };
         UserDetails: {
             data: {
                 /** @example userDetails */
@@ -173,7 +221,65 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
-    createUser: {
+    signin: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description User credentials (username and password) */
+        requestBody?: {
+            content: {
+                "application/vnd.api+json": {
+                    data: {
+                        /** @example createUser */
+                        type: string;
+                        attributes: components["schemas"]["UserCredentials"];
+                    };
+                };
+            };
+        };
+        responses: {
+            /** @description User signed in successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/vnd.api+json": components["schemas"]["AuthenticationToken"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/vnd.api+json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/vnd.api+json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Server error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/vnd.api+json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    signup: {
         parameters: {
             query?: never;
             header?: never;
@@ -185,7 +291,7 @@ export interface operations {
             content: {
                 "application/vnd.api+json": {
                     data: {
-                        /** @example createUser */
+                        /** @example signup */
                         type: string;
                         attributes: components["schemas"]["CreateUser"];
                     };

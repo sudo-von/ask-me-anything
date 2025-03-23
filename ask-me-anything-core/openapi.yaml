@@ -5,11 +5,61 @@ info:
   description: This is the API documentation for the ask-me-anything application
 
 paths:
-  /user:
+  /authentication/signin:
+    post:
+      summary: Sign in a user
+      description: User authentication
+      operationId: signin
+      requestBody:
+        description: User credentials
+        content:
+          application/vnd.api+json:
+            schema:
+              type: object
+              required:
+                - data
+              properties:
+                data:
+                  type: object
+                  required:
+                    - type
+                    - attributes
+                  properties:
+                    type:
+                      type: string
+                      example: signin
+                    attributes:
+                      $ref: "#/components/schemas/UserCredentials"
+      responses:
+        "200":
+          description: User signed in successfully
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: "#/components/schemas/AuthenticationToken"
+        "401":
+          description: Unauthorized
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Server error
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /authentication/signup:
     post:
       summary: Create a new user
-      description: This endpoint allows creating a new user in the system
-      operationId: createUser
+      description: User creation is temporarily restricted to a single user per system
+      operationId: signup
       requestBody:
         description: User data
         content:
@@ -27,7 +77,7 @@ paths:
                   properties:
                     type:
                       type: string
-                      example: createUser
+                      example: signup
                     attributes:
                       $ref: "#/components/schemas/CreateUser"
       responses:
@@ -49,7 +99,6 @@ paths:
             application/vnd.api+json:
               schema:
                 $ref: "#/components/schemas/Error"
-
 components:
   schemas:
     Error:
@@ -69,6 +118,29 @@ components:
           type: string
           description: A short description of the error
 
+    AuthenticationToken:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          required:
+            - type
+            - attributes
+          properties:
+            type:
+              type: string
+              example: authenticationToken
+            attributes:
+              type: object
+              required:
+                - token
+              properties:
+                token:
+                  type: string
+                  description: The authentication token for the user
+                  example: token
     CreateUser:
       type: object
       required:
@@ -297,6 +369,33 @@ components:
                 username:
                   type: string
                   description: The user's username
+    UserCredentials:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          required:
+            - type
+            - attributes
+          properties:
+            type:
+              type: string
+              example: userCredentials
+            attributes:
+              type: object
+              required:
+                - username
+                - password
+              properties:
+                username:
+                  type: string
+                  example: username
+                password:
+                  type: string
+                  format: password
+                  example: password
     UserDetails:
       type: object
       required:
