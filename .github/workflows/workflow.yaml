@@ -31,10 +31,6 @@ jobs:
       - name: Plan (Development)
         run: terraform plan
         working-directory: ./ask-me-anything-api/src/infrastructure/cloud/development
-      - name: Approval (Development)
-        uses: peter-evans/manual-approval-action@v2
-        with:
-          approvers: "sudo-von"
       - name: Apply (Development)
         run: terraform apply -auto-approve
         working-directory: ./ask-me-anything-api/src/infrastructure/cloud/development
