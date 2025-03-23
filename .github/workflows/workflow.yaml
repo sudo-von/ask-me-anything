@@ -56,5 +56,5 @@ jobs:
             --instance-ids "${{ secrets.INSTANCE_ID }}" \
             --document-name "AWS-RunShellScript" \
             --comment "Update Docker container" \
-            --parameters 'commands=["docker pull ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/ask-me-anything-api-ecr-repository-development:latest && docker run -d -p 3000:3000 ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/ask-me-anything-api-ecr-repository-development:latest"]' \
+            --parameters 'commands=["aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com && docker pull ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/ask-me-anything-api-ecr-repository-development:latest && docker run -d -p 3000:3000 ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/ask-me-anything-api-ecr-repository-development:latest"]' \
             --region us-east-1
