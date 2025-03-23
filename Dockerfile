@@ -14,9 +14,11 @@ RUN rush install \
 
 FROM node:20.14-alpine AS runner
 
-WORKDIR /ask-me-anything-api/
+WORKDIR /ask-me-anything
 
-COPY --from=builder /ask-me-anything/common/deploy/ask-me-anything-api .
+COPY --from=builder /ask-me-anything/common/deploy .
+
+WORKDIR /ask-me-anything/ask-me-anything-api
 
 EXPOSE 3000
 
