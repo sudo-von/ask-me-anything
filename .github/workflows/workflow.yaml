@@ -15,7 +15,7 @@ jobs:
     steps:
       - name: Clone (Development)
         uses: actions/checkout@v3
-      - name: configure aws credentials
+      - name: Configure credentials
         uses: aws-actions/configure-aws-credentials@v1.7.0
         with:
           role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/GitHubActionsRole
@@ -38,11 +38,11 @@ jobs:
       - name: Build Image (Development)
         run: |
           docker build -t ask-me-anything:latest .
-      - name: Login to Amazon ECR
+      - name: Login to Amazon ECR (Development)
         uses: aws-actions/amazon-ecr-login@v1
-      - name: Tag Docker Image for ECR
+      - name: Tag Image for ECR (Development)
         run: |
           docker tag my-app-image:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/ask-me-anything-api-ecr-repository-development:latest
-      - name: Push Docker Image to ECR
+      - name: Push Image to ECR
         run: |
           docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/ask-me-anything-api-ecr-repository-development:latest
