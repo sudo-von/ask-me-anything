@@ -17,6 +17,11 @@ provider "aws" {
   region = "us-east-1"
 }
 
+resource "aws_instance" "ask_me_anything_api_instance_development" {
+  ami                    = "ami-08b5b3a93ed654d19"
+  instance_type          = "t2.micro"
+  vpc_security_group_ids = [aws_security_group.ask_me_anything_api_security_group_development.id]
+}
 
 resource "aws_security_group" "ask_me_anything_api_security_group_development" {
   name        = "ask_me_anything_api_security_group_development"
@@ -41,14 +46,6 @@ resource "aws_security_group" "ask_me_anything_api_security_group_development" {
   lifecycle {
     prevent_destroy = false
   }
-
-  depends_on = [aws_instance.ask_me_anything_api_instance_development]
-}
-
-resource "aws_instance" "ask_me_anything_api_instance_development" {
-  ami                    = "ami-08b5b3a93ed654d19"
-  instance_type          = "t2.micro"
-  vpc_security_group_ids = [aws_security_group.ask_me_anything_api_security_group_development.id]
 }
 
 resource "aws_ecr_repository" "ask_me_anything_api_ecr_repository_development" {
