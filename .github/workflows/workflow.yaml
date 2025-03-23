@@ -1,19 +1,19 @@
-name: Build and Push Docker Image to ECR
+name: Build and Deploy
 
 on:
   push:
     branches: [master]
-  pull_request:
-    branches: [master]
+  workflow_dispatch:
 
 permissions:
   id-token: write
   contents: read
+
 jobs:
-  AssumeRoleAndCallIdentity:
+  build-and-deploy-development:
     runs-on: ubuntu-latest
     steps:
-      - name: Git clone the repository
+      - name: Clone (Development)
         uses: actions/checkout@v3
       - name: configure aws credentials
         uses: aws-actions/configure-aws-credentials@v1.7.0
@@ -21,6 +21,11 @@ jobs:
           role-to-assume: arn:aws:iam::045619769161:role/GitHubActionsRole
           role-session-name: GitHub_to_AWS_via_FederatedOIDC
           aws-region: us-east-1
-      - name: GetCallerIdentity
-        run: |
-          aws sts get-caller-identity
+      - name: Init (Development)
+        run: terraform init
+        working-directory: ./ask-me-anything-api/src/infrastructure/cloud/development
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+      - name: Apply (Development)
+        run: terraform apply -auto-approve
+        working-directory: ./ask-me-anything-api/src/infrastructure/cloud/development
+        if: ${{ github.event_name == 'workflow_dispatch' }}
