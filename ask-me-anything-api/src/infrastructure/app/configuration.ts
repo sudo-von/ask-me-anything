@@ -1,13 +1,13 @@
 import * as Database from '@infrastructure/database';
-import * as Handlers from '@infrastructure/handlers';
+import * as Server from '@infrastructure/server';
 
 export const start = async () => {
   try {
     console.log('💾 Trying to establish a database connection.');
     await Database.start();
 
-    console.log('🤖 Trying to initialize the handlers.');
-    Handlers.start();
+    console.log('🤖 Trying to initialize the server.');
+    Server.start();
   } catch (e) {
     const error = e as Error;
     error.message = `❌ Failed to start the application: ${error.message}`;
