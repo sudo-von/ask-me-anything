@@ -1,5 +1,5 @@
-import * as Database from '../database';
-import * as Handlers from '../handlers';
+import * as Database from '@infrastructure/database';
+import * as Handlers from '@infrastructure/handlers';
 
 export const start = async () => {
   try {

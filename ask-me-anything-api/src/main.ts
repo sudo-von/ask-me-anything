@@ -1,4 +1,4 @@
-import * as App from './infrastructure/app';
+import * as App from '@infrastructure/app';
 
 (async () => {
   try {
