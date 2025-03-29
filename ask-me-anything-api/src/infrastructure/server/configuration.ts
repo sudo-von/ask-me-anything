@@ -31,7 +31,7 @@ export const start = async () => {
     app.listen(PORT, () => console.log(`🤖 Server is running on PORT:${PORT}.`));
   } catch (e) {
     const error = e as Error;
-    error.message = `❌ Failed to start the handlers: ${error.message}.`;
+    error.message = `❌ Failed to start the server: ${error.message}.`;
     throw error;
   }
 };

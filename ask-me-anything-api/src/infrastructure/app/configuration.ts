@@ -1,8 +1,12 @@
+import dotenv from 'dotenv';
+import path from 'path';
 import * as Database from '@infrastructure/database';
 import * as Server from '@infrastructure/server';
 
 export const start = async () => {
   try {
+    dotenv.config({ path: path.join(__dirname, '..', '..', '..', '.env') });
+
     console.log('💾 Trying to establish a database connection.');
     await Database.start();
 

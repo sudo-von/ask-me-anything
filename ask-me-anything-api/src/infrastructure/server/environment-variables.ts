@@ -3,6 +3,8 @@ type EnvironmentVariables = {
 };
 
 export const getEnvironmentVariables = (): EnvironmentVariables => {
+  console.log('🤖 Loading server environment variables.');
+
   const { PORT } = process.env;
 
   if (!PORT) {
