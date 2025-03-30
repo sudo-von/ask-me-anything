@@ -65,21 +65,7 @@ paths:
         content:
           application/vnd.api+json:
             schema:
-              type: object
-              required:
-                - data
-              properties:
-                data:
-                  type: object
-                  required:
-                    - type
-                    - attributes
-                  properties:
-                    type:
-                      type: string
-                      example: signup
-                    attributes:
-                      $ref: "#/components/schemas/CreateUser"
+              $ref: "#/components/schemas/CreateUser"
       responses:
         "201":
           description: User created successfully
@@ -154,6 +140,8 @@ components:
           properties:
             type:
               type: string
+              enum:
+                - createUser
               example: createUser
             attributes:
               type: object

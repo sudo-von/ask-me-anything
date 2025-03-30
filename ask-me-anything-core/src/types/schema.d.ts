@@ -15,7 +15,7 @@ export interface paths {
         put?: never;
         /**
          * Sign in a user
-         * @description User authentication with username and password
+         * @description User authentication
          */
         post: operations["signin"];
         delete?: never;
@@ -71,8 +71,11 @@ export interface components {
         };
         CreateUser: {
             data: {
-                /** @example createUser */
-                type: string;
+                /**
+                 * @example createUser
+                 * @enum {string}
+                 */
+                type: "createUser";
                 attributes: {
                     /** @description The user's name */
                     name: string;
@@ -228,12 +231,12 @@ export interface operations {
             path?: never;
             cookie?: never;
         };
-        /** @description User credentials (username and password) */
+        /** @description User credentials */
         requestBody?: {
             content: {
                 "application/vnd.api+json": {
                     data: {
-                        /** @example createUser */
+                        /** @example signin */
                         type: string;
                         attributes: components["schemas"]["UserCredentials"];
                     };
@@ -289,13 +292,7 @@ export interface operations {
         /** @description User data */
         requestBody?: {
             content: {
-                "application/vnd.api+json": {
-                    data: {
-                        /** @example signup */
-                        type: string;
-                        attributes: components["schemas"]["CreateUser"];
-                    };
-                };
+                "application/vnd.api+json": components["schemas"]["CreateUser"];
             };
         };
         responses: {

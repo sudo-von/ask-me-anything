@@ -16,3 +16,9 @@ export type User = components['schemas']['User'];
 export type UserCredentials = components['schemas']['UserCredentials'];
 export type UserDetails = components['schemas']['UserDetails'];
 export type UserMetrics = components['schemas']['UserMetrics'];
+
+export type ValidationError = {
+  message: string;
+  status: number;
+  errors: string[];
+};
