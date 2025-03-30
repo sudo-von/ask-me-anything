@@ -3,33 +3,37 @@ type EnvironmentVariables = {
   SALT_ROUNDS: number;
 };
 
+export const getEnvironmentVariable = (name: string): string => {
+  const environmentVariable = process.env[name];
+
+  if (!environmentVariable) {
+    throw new Error(`❌ Missing required environment variable: '${name}'`);
+  }
+
+  return environmentVariable;
+};
+
 export const getEnvironmentVariables = (): EnvironmentVariables => {
-  console.log("🔒 Loading environment variables.");
+  console.log('🔒 Loading environment variables.');
 
-  const {
-    PORT,
-    SALT_ROUNDS,
-  } = process.env;
+  const PORT = getEnvironmentVariable('PORT');
+  const SALT_ROUNDS = getEnvironmentVariable('SALT_ROUNDS');
 
-  if (!PORT) {
-    throw new Error("❌ Missing required environment variable: 'PORT'");
-  }
-  if (!SALT_ROUNDS) {
-    throw new Error("❌ Missing required environment variable: 'SALT_ROUNDS'");
-  }
-
-  const parsedPort = Number(PORT);
-  const parsedSaltRounds = Number(SALT_ROUNDS);
-
-  if (isNaN(parsedPort)) {
-    throw new Error(`❌ Invalid value '${PORT}' for 'PORT'. It must be a valid number`);
-  }
-  if (isNaN(parsedSaltRounds)) {
-    throw new Error(`❌ Invalid value '${SALT_ROUNDS}' for 'SALT_ROUNDS'. It must be a valid number`);
-  }
+  const parsedPort = parseEnvironmentVariable('PORT', PORT);
+  const parsedSaltRounds = parseEnvironmentVariable('SALT_ROUNDS', SALT_ROUNDS);
 
   return {
     PORT: parsedPort,
     SALT_ROUNDS: parsedSaltRounds,
   };
+};
+
+export const parseEnvironmentVariable = (name: string, value: string): number => {
+  const parsedEnvironmentVariable = Number(value);
+
+  if (isNaN(parsedEnvironmentVariable)) {
+    throw new Error(`❌ Invalid value '${parsedEnvironmentVariable}' for '${name}'. It must be a valid number`);
+  }
+
+  return parsedEnvironmentVariable;
 };
