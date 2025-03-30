@@ -3,11 +3,9 @@ import {
   Column,
   DataType,
   Default,
-  IsUUID,
   Model,
   PrimaryKey,
   Table,
-  Unique,
 } from 'sequelize-typescript';
 
 @Table({
@@ -23,19 +21,22 @@ export class UserModel extends Model {
 
   /* 🗃️ Rest. */
   @AllowNull(false)
+  @Default('')
   @Column(DataType.STRING)
-  avatar: string = '';
+  declare avatar: string;
 
   @AllowNull(false)
+  @Default('')
   @Column(DataType.STRING)
-  name: string = '';
+  declare name: string;
 
   @AllowNull(false)
+  @Default('')
   @Column(DataType.STRING)
-  password: string = '';
+  declare password: string;
 
   @AllowNull(false)
-  @Unique
+  @Default('')
   @Column(DataType.STRING)
-  username: string = '';
+  declare username: string;
 };
