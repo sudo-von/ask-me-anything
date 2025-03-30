@@ -1,4 +1,4 @@
-import { HttpStatusCode, IHttpError } from "@infrastructure/server";
+import { HttpStatusCode, IHttpError } from "./types";
 
 export class HttpError extends Error implements IHttpError {
   code: string;

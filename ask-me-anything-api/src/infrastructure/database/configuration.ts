@@ -16,7 +16,7 @@ export const start = async () => {
 
     await connection.authenticate();
 
-    await connection.sync({ alter: true });
+    await connection.sync({ force: true });
 
     console.log('💾 Database connection established successfully.');
   } catch (e) {

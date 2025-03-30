@@ -1,4 +1,4 @@
-import { HTTP_STATUS_CODES } from "@infrastructure/server";
+import { HTTP_STATUS_CODES } from "./status-codes";
 
 export type HttpStatusCodeKey = keyof typeof HTTP_STATUS_CODES;
 export type HttpStatusCode = typeof HTTP_STATUS_CODES[HttpStatusCodeKey];

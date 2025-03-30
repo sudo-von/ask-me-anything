@@ -1,11 +1,12 @@
 import path from 'path';
 import { Express, NextFunction, Request, Response } from 'express';
-import { HttpError } from 'express-openapi-validator/dist/framework/types';
 import { initialize } from 'express-openapi';
 import {
   openApiRequestMiddleware,
   openApiResponseMiddleware,
 } from './middlewares';
+import { HttpError, IHttpError } from '../http';
+import { HttpError as OpenAPIError } from 'express-openapi-validator/dist/framework/types';
 
 export const start = async (app: Express) => {
   /* 📄 Docs. */
@@ -35,14 +36,34 @@ export const start = async (app: Express) => {
     app,
     paths,
     logger: console,
-    pathsIgnore: /^(.*deserializers|.*serializers|.*test|.*types)$/,
+    pathsIgnore: /^(.*deserializers|.*errors|.*serializers|.*test|.*types)$/,
     promiseMode: true,
     routesGlob: '**/*.{ts,js}',
     routesIndexFileRegExp: /(?:endpoints)?\.[tj]s$/,
     validateApiDoc: true,
   });
   app.use((
-    error: HttpError,
+    error: IHttpError,
+    _request: Request,
+    response: Response,
+    next: NextFunction
+  ) => {
+    try {
+      if (error instanceof HttpError) {
+        console.log({ code: error })
+        response.status(error.statusCode).json({
+          code: error.code,
+          detail: error.detail,
+          statusCode: error.statusCode,
+          title: error.title,
+        });
+        return;
+      }
+      next();
+    } catch (e) { console.log('abc', e) }
+  });
+  app.use((
+    error: OpenAPIError,
     _request: Request,
     response: Response,
     _next: NextFunction

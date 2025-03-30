@@ -1,7 +1,7 @@
 import { Response } from 'express';
 import * as OpenApiValidator from 'express-openapi-validator';
 import { HttpError as OpenAPIHttpError } from 'express-openapi-validator/dist/framework/types';
-import { HTTP_STATUS_CODES, isValidHttpStatusCodeKey, HttpStatusCode, IHttpError } from '@infrastructure/server';
+import { Http } from '@infrastructure/server';
 
 type OpenApiRequestMiddlewareParams = {
   apiSpec: string;
@@ -15,7 +15,7 @@ export const openApiRequestMiddleware = ({ apiSpec }: OpenApiRequestMiddlewarePa
 
 type OpenApiResponseMiddlewareParams = {
   error: OpenAPIHttpError,
-  response: Response<IHttpError>,
+  response: Response<Http.IHttpError>,
 };
 
 export const openApiResponseMiddleware = ({ error, response }: OpenApiResponseMiddlewareParams) => {
@@ -24,13 +24,15 @@ export const openApiResponseMiddleware = ({ error, response }: OpenApiResponseMi
     status: statusCode,
   } = error;
 
-  const httpStatusCodeKey = Object.keys(HTTP_STATUS_CODES).find((httpStatusCodeKey) =>
-    isValidHttpStatusCodeKey(httpStatusCodeKey) && HTTP_STATUS_CODES[httpStatusCodeKey] === statusCode
+  console.log('SADHJKASDHJDASHJASDHSA')
+
+  const httpStatusCodeKey = Object.keys(Http.HTTP_STATUS_CODES).find((httpStatusCodeKey) =>
+    Http.isValidHttpStatusCodeKey(httpStatusCodeKey) && Http.HTTP_STATUS_CODES[httpStatusCodeKey] === statusCode
   );
 
-  let httpStatusCode: HttpStatusCode = HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR;
-  if (httpStatusCodeKey && isValidHttpStatusCodeKey(httpStatusCodeKey)) {
-    httpStatusCode = HTTP_STATUS_CODES[httpStatusCodeKey];
+  let httpStatusCode: Http.HttpStatusCode = Http.HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR;
+  if (httpStatusCodeKey && Http.isValidHttpStatusCodeKey(httpStatusCodeKey)) {
+    httpStatusCode = Http.HTTP_STATUS_CODES[httpStatusCodeKey];
   }
 
   response.status(httpStatusCode).json({
