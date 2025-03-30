@@ -1,10 +1,7 @@
-import express, { NextFunction, Request, Response } from 'express';
-import path from 'path';
-import { initialize } from 'express-openapi';
-import * as OpenApiValidator from 'express-openapi-validator';
+import express from 'express';
 import { getEnvironmentVariables } from '@infrastructure/server/environment-variables';
-import { ValidationError } from '@infrastructure/server';
 import { Server } from 'http';
+import { configureOpenAPI } from './utils/open-api/configuration';
 
 let server: Server;
 
@@ -18,37 +15,8 @@ export const start = async () => {
     /* 🔧 Environment variables. */
     const { PORT } = getEnvironmentVariables();
 
-    /* 📄 OpenAPI docs. */
-    const apiDoc = path.join(__dirname, '..', '..', '..', 'node_modules', '@sudo-von', 'ask-me-anything-core', 'openapi.yaml');
-    const paths = path.join(__dirname, 'routes');
-
-    /* 📡 OpenAPI middlewares. */
-    const openApiRequestMiddleware = OpenApiValidator.middleware({
-      apiSpec: apiDoc,
-      validateRequests: true,
-      validateResponses: true,
-    });
-    const openApiResponseMiddleware = (error: ValidationError, _request: Request, response: Response, next: NextFunction) => {
-      response.status(error.status).json({
-        message: error.message,
-        errors: error.errors,
-      })
-    };
-
-    /* ⚙️ OpenAPI configuration. */
-    app.use(openApiRequestMiddleware);
-    await initialize({
-      apiDoc,
-      app,
-      paths,
-      logger: console,
-      pathsIgnore: /^(.*serializers|.*test|.*types)$/,
-      promiseMode: true,
-      routesGlob: '**/*.{ts,js}',
-      routesIndexFileRegExp: /(?:index)?\.[tj]s$/,
-      validateApiDoc: true,
-    });
-    app.use(openApiResponseMiddleware);
+    /* 📡 OpenAPI configuration. */
+    await configureOpenAPI(app);
 
     /* 🤖 Server. */
     server = app.listen(PORT, () => console.log(`🤖 Server is running on PORT:${PORT}.`));
