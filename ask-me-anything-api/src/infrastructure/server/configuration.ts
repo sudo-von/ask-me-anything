@@ -42,9 +42,10 @@ export const start = async () => {
       app,
       paths,
       logger: console,
-      pathsIgnore: /^(.*\.test|types)\.ts$/,
+      pathsIgnore: /^(.*\.test|.*types)$/,
       promiseMode: true,
       routesGlob: '**/*.{ts,js}',
+      routesIndexFileRegExp: /(?:index)?\.[tj]s$/,
       validateApiDoc: true,
     });
     app.use(openApiResponseMiddleware);
