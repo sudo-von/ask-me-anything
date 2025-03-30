@@ -317,6 +317,15 @@ export interface operations {
                     "application/vnd.api+json": components["schemas"]["Error"];
                 };
             };
+            /** @description Conflict. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/vnd.api+json": components["schemas"]["Error"];
+                };
+            };
             /** @description Server error. */
             500: {
                 headers: {

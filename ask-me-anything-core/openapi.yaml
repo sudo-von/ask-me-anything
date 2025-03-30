@@ -82,6 +82,12 @@ paths:
             application/vnd.api+json:
               schema:
                 $ref: "#/components/schemas/Error"
+        "409":
+          description: Conflict.
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: "#/components/schemas/Error"
         "500":
           description: Server error.
           content:
