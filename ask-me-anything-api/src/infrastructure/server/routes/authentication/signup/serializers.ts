@@ -1,6 +1,6 @@
-import { BearerToken, DeserializedSchema } from '@infrastructure/server';
+import { Signup, DeserializedSchema } from '@infrastructure/server';
 
-export const serializeBearerToken = (bearerToken: DeserializedSchema<'BearerToken'>): BearerToken => ({
+export const serializeBearerToken = (bearerToken: DeserializedSchema<'BearerToken'>): Signup.BearerToken => ({
   data: {
     attributes: {
       token: bearerToken.token,

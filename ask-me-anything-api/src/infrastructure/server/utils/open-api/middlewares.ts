@@ -20,13 +20,9 @@ type OpenApiResponseMiddlewareParams = {
 
 export const openApiResponseMiddleware = ({ error, response }: OpenApiResponseMiddlewareParams) => {
   const {
-    errors: details,
-    message: title,
+    message: detail,
     status: statusCode,
   } = error;
-  console.log(error)
-
-  const [detail] = details;
 
   const httpStatusCodeKey = Object.keys(HTTP_STATUS_CODES).find((httpStatusCodeKey) =>
     isValidHttpStatusCodeKey(httpStatusCodeKey) && HTTP_STATUS_CODES[httpStatusCodeKey] === statusCode
@@ -39,7 +35,7 @@ export const openApiResponseMiddleware = ({ error, response }: OpenApiResponseMi
 
   response.status(httpStatusCode).json({
     code: 'OPENAPI_ERROR',
-    detail: detail.message,
+    detail,
     statusCode: httpStatusCode,
     title: 'There was an error validating the request.',
   });

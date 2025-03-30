@@ -7,7 +7,7 @@ import {
   openApiResponseMiddleware,
 } from './middlewares';
 
-export const configureOpenAPI = async (app: Express) => {
+export const start = async (app: Express) => {
   /* 📄 Docs. */
   const openApi = path.join(
     __dirname,

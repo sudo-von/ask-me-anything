@@ -1,7 +1,6 @@
 import express from 'express';
-import { getEnvironmentVariables } from '@infrastructure/server/environment-variables';
 import { Server } from 'http';
-import { configureOpenAPI } from './utils/open-api/configuration';
+import { EnvironmentVariables, OpenAPI } from '@infrastructure/server';
 
 let server: Server;
 
@@ -13,10 +12,10 @@ export const start = async () => {
     app.use(express.json({ type: 'application/vnd.api+json' }))
 
     /* 🔧 Environment variables. */
-    const { PORT } = getEnvironmentVariables();
+    const { PORT } = EnvironmentVariables.getEnvironmentVariables();
 
-    /* 📡 OpenAPI configuration. */
-    await configureOpenAPI(app);
+    /* 📡 OpenAPI. */
+    await OpenAPI.start(app);
 
     /* 🤖 Server. */
     server = app.listen(PORT, () => console.log(`🤖 Server is running on PORT:${PORT}.`));
