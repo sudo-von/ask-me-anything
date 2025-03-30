@@ -1,16 +1,16 @@
 import { Sequelize } from 'sequelize-typescript';
-import { UserModel } from '@infrastructure/database';
+import { Models } from '@database';
 import path from 'path';
 
 let connection: Sequelize;
 
 export const start = async () => {
   try {
-    const storage = path.join(__dirname, '..', '..', '..', '..', 'ask-me-anything-database', 'ask-me-anything.db');
+    const storage = path.join(__dirname, '..', '..', '..', 'ask-me-anything-database', 'ask-me-anything.db');
 
     connection = new Sequelize({
       dialect: 'sqlite',
-      models: [UserModel],
+      models: [Models.UserModel],
       storage,
     });
 

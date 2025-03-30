@@ -1,4 +1,9 @@
-import { createHttpError, HTTP_STATUS_CODES } from "@infrastructure/server/utils/http";
+import { Http } from "@services";
+
+const {
+  createHttpError,
+  HTTP_STATUS_CODES
+} = Http;
 
 export const usernameAlreadyInUse = createHttpError({
   code: 'USERNAME_ALREADY_IN_USE',

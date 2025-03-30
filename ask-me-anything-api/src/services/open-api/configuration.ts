@@ -15,8 +15,6 @@ export const start = async (app: Express) => {
     '..',
     '..',
     '..',
-    '..',
-    '..',
     'node_modules',
     '@sudo-von',
     'ask-me-anything-core',
@@ -26,6 +24,7 @@ export const start = async (app: Express) => {
     __dirname,
     '..',
     '..',
+    'server',
     'routes',
   );
 
@@ -48,19 +47,17 @@ export const start = async (app: Express) => {
     response: Response,
     next: NextFunction
   ) => {
-    try {
-      if (error instanceof HttpError) {
-        console.log({ code: error })
-        response.status(error.statusCode).json({
-          code: error.code,
-          detail: error.detail,
-          statusCode: error.statusCode,
-          title: error.title,
-        });
-        return;
-      }
-      next();
-    } catch (e) { console.log('abc', e) }
+    if (error instanceof HttpError) {
+      console.log({ code: error })
+      response.status(error.statusCode).json({
+        code: error.code,
+        detail: error.detail,
+        statusCode: error.statusCode,
+        title: error.title,
+      });
+      return;
+    }
+    next();
   });
   app.use((
     error: OpenAPIError,

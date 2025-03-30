@@ -1,6 +1,7 @@
 import express from 'express';
 import { Server } from 'http';
-import { EnvironmentVariables, OpenAPI } from '@infrastructure/server';
+import { OpenAPI } from '@services';
+import { EnvironmentVariables } from '@utils';
 
 let server: Server;
 

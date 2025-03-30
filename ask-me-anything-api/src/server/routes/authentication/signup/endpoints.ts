@@ -1,12 +1,14 @@
-import { UserModel } from "@infrastructure/database";
+import { Models } from "@database";
 import { Request, Response } from "express";
 import { BearerToken, CreateUser } from "./types";
 import { deserializeCreateUser } from "./deserializers";
 import { usernameAlreadyInUse } from "./errors";
-import { Http } from "@infrastructure/server";
+import { Http } from "@services";
 import { serializeBearerToken } from "./serializers";
 import bcrypt from "bcrypt";
-import { EnvironmentVariables } from "@infrastructure/server";
+import { EnvironmentVariables } from "@utils";
+
+const { UserModel } = Models;
 
 const { SALT_ROUNDS } = EnvironmentVariables.getEnvironmentVariables();
 

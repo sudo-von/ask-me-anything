@@ -1,7 +1,7 @@
 import { Response } from 'express';
 import * as OpenApiValidator from 'express-openapi-validator';
 import { HttpError as OpenAPIHttpError } from 'express-openapi-validator/dist/framework/types';
-import { Http } from '@infrastructure/server';
+import { Http } from '@services';
 
 type OpenApiRequestMiddlewareParams = {
   apiSpec: string;

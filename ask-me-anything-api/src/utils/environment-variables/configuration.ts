@@ -4,9 +4,12 @@ type EnvironmentVariables = {
 };
 
 export const getEnvironmentVariables = (): EnvironmentVariables => {
-  console.log('🤖 Loading server environment variables.');
+  console.log("🔒 Loading environment variables.");
 
-  const { PORT, SALT_ROUNDS } = process.env;
+  const {
+    PORT,
+    SALT_ROUNDS,
+  } = process.env;
 
   if (!PORT) {
     throw new Error("❌ Missing required environment variable: 'PORT'");

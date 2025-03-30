@@ -1,11 +1,11 @@
 import dotenv from 'dotenv';
 import path from 'path';
-import * as Database from '@infrastructure/database';
-import * as Server from '@infrastructure/server';
+import * as Database from '@database';
+import * as Server from '@server';
 
 export const start = async () => {
   try {
-    dotenv.config({ path: path.join(__dirname, '..', '..', '..', '.env') });
+    dotenv.config({ path: path.join(__dirname, '..', '..', '.env') });
 
     console.log('💾 Trying to establish a database connection.');
     await Database.start();
@@ -32,4 +32,4 @@ export const release = async () => {
     error.message = `❌ Failed to release resources: ${error.message}.`;
     throw error;
   }
-}
+};
