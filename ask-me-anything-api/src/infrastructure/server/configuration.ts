@@ -1,9 +1,12 @@
-import express, { Errback, NextFunction, Request, Response } from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import path from 'path';
 import { initialize } from 'express-openapi';
 import * as OpenApiValidator from 'express-openapi-validator';
 import { getEnvironmentVariables } from '@infrastructure/server/environment-variables';
 import { ValidationError } from '@infrastructure/server';
+import { Server } from 'http';
+
+let server: Server;
 
 export const start = async () => {
   try {
@@ -39,18 +42,34 @@ export const start = async () => {
       app,
       paths,
       logger: console,
+      pathsIgnore: /^(.*\.test|types)\.ts$/,
       promiseMode: true,
       routesGlob: '**/*.{ts,js}',
-      routesIndexFileRegExp: /(?:index)?\.[tj]s$/,
       validateApiDoc: true,
     });
     app.use(openApiResponseMiddleware);
 
     /* 🤖 Server. */
-    app.listen(PORT, () => console.log(`🤖 Server is running on PORT:${PORT}.`));
+    server = app.listen(PORT, () => console.log(`🤖 Server is running on PORT:${PORT}.`));
   } catch (e) {
     const error = e as Error;
     error.message = `❌ Failed to start the server: ${error.message}.`;
+    throw error;
+  }
+};
+
+export const close = () => {
+  try {
+    if (!server) {
+      console.log('🤖 Server connection not found.');
+      return;
+    }
+
+    server.close();
+    console.log('🤖 Server connection closed successfully.');
+  } catch (e) {
+    const error = e as Error;
+    error.message = `❌ Failed to close the server connection: ${error.message}.`;
     throw error;
   }
 };

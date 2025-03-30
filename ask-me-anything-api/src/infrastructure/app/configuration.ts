@@ -11,7 +11,7 @@ export const start = async () => {
     await Database.start();
 
     console.log('🤖 Trying to initialize the server.');
-    Server.start();
+    await Server.start();
   } catch (e) {
     const error = e as Error;
     error.message = `❌ Failed to start the application: ${error.message}`;
@@ -22,7 +22,10 @@ export const start = async () => {
 export const release = async () => {
   try {
     console.log('💻 Attempting to release resources.');
+
     await Database.close();
+    Server.close();
+
     console.log('💻 Resources released successfully.');
   } catch (e) {
     const error = e as Error;
