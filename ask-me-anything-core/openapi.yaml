@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: ask-me-anything API
   version: 1.0.0
-  description: This is the API documentation for the ask-me-anything application
+  description: This is the API documentation for the ask-me-anything application.
 
 paths:
   /authentication/signin:
@@ -36,7 +36,7 @@ paths:
           content:
             application/vnd.api+json:
               schema:
-                $ref: "#/components/schemas/AuthenticationToken"
+                $ref: "#/components/schemas/BearerToken"
         "401":
           description: Unauthorized
           content:
@@ -58,29 +58,32 @@ paths:
   /authentication/signup:
     post:
       summary: Create a new user
-      description: User creation is temporarily restricted to a single user per system
+      description: |
+        Creates a new user account by registering with the provided details. 
+        However, it is not required to create an account in order to ask questions, 
+        as they can be submitted anonymously.
       operationId: signup
       requestBody:
-        description: User data
+        description: User data.
         content:
           application/vnd.api+json:
             schema:
               $ref: "#/components/schemas/CreateUser"
       responses:
         "201":
-          description: User created successfully
+          description: User and token created successfully.
           content:
             application/vnd.api+json:
               schema:
-                $ref: "#/components/schemas/User"
+                $ref: "#/components/schemas/BearerToken"
         "400":
-          description: Bad request
+          description: Bad request.
           content:
             application/vnd.api+json:
               schema:
                 $ref: "#/components/schemas/Error"
         "500":
-          description: Server error
+          description: Server error.
           content:
             application/vnd.api+json:
               schema:
@@ -104,7 +107,7 @@ components:
           type: string
           description: A short description of the error
 
-    AuthenticationToken:
+    BearerToken:
       type: object
       required:
         - data
@@ -117,7 +120,9 @@ components:
           properties:
             type:
               type: string
-              example: authenticationToken
+              enum:
+                - bearerToken
+              example: bearerToken
             attributes:
               type: object
               required:
@@ -125,8 +130,7 @@ components:
               properties:
                 token:
                   type: string
-                  description: The authentication token for the user
-                  example: token
+                  description: A Bearer token to authenticate future requests.
     CreateUser:
       type: object
       required:

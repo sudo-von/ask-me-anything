@@ -35,7 +35,10 @@ export interface paths {
         put?: never;
         /**
          * Create a new user
-         * @description User creation is temporarily restricted to a single user per system
+         * @description Creates a new user account by registering with the provided details.
+         *     However, it is not required to create an account in order to ask questions,
+         *     as they can be submitted anonymously.
+         *
          */
         post: operations["signup"];
         delete?: never;
@@ -56,15 +59,15 @@ export interface components {
             /** @description A short description of the error */
             title: string;
         };
-        AuthenticationToken: {
+        BearerToken: {
             data: {
-                /** @example authenticationToken */
-                type: string;
+                /**
+                 * @example bearerToken
+                 * @enum {string}
+                 */
+                type: "bearerToken";
                 attributes: {
-                    /**
-                     * @description The authentication token for the user
-                     * @example token
-                     */
+                    /** @description A Bearer token to authenticate future requests. */
                     token: string;
                 };
             };
@@ -250,7 +253,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/vnd.api+json": components["schemas"]["AuthenticationToken"];
+                    "application/vnd.api+json": components["schemas"]["BearerToken"];
                 };
             };
             /** @description Unauthorized */
@@ -289,23 +292,23 @@ export interface operations {
             path?: never;
             cookie?: never;
         };
-        /** @description User data */
+        /** @description User data. */
         requestBody?: {
             content: {
                 "application/vnd.api+json": components["schemas"]["CreateUser"];
             };
         };
         responses: {
-            /** @description User created successfully */
+            /** @description User and token created successfully. */
             201: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/vnd.api+json": components["schemas"]["User"];
+                    "application/vnd.api+json": components["schemas"]["BearerToken"];
                 };
             };
-            /** @description Bad request */
+            /** @description Bad request. */
             400: {
                 headers: {
                     [name: string]: unknown;
@@ -314,7 +317,7 @@ export interface operations {
                     "application/vnd.api+json": components["schemas"]["Error"];
                 };
             };
-            /** @description Server error */
+            /** @description Server error. */
             500: {
                 headers: {
                     [name: string]: unknown;
