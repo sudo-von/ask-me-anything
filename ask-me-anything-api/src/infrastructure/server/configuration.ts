@@ -42,7 +42,7 @@ export const start = async () => {
       app,
       paths,
       logger: console,
-      pathsIgnore: /^(.*\.test|.*types)$/,
+      pathsIgnore: /^(.*serializers|.*test|.*types)$/,
       promiseMode: true,
       routesGlob: '**/*.{ts,js}',
       routesIndexFileRegExp: /(?:index)?\.[tj]s$/,
