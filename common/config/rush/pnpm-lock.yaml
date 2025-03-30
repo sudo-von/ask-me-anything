@@ -25,6 +25,9 @@ importers:
       express-openapi-validator:
         specifier: ~5.4.4
         version: 5.4.4(express@4.21.2)
+      jsonapi-serializer:
+        specifier: ~3.6.9
+        version: 3.6.9
       reflect-metadata:
         specifier: ~0.2.2
         version: 0.2.2
@@ -41,6 +44,9 @@ importers:
       '@types/express':
         specifier: ~5.0.0
         version: 5.0.0
+      '@types/jsonapi-serializer':
+        specifier: ~3.6.8
+        version: 3.6.8
       '@types/node':
         specifier: ~22.13.5
         version: 22.13.5
@@ -432,6 +438,10 @@ packages:
   /@types/json-schema@7.0.15:
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
     dev: false
+
+  /@types/jsonapi-serializer@3.6.8:
+    resolution: {integrity: sha512-wPx2UBoW+R2KW0Z2U7FkzIM+iDLFqjHXxr8WGE9F8ww02m+qt886+8a2lGFSiODXe9JVnPscB8d+5+eL/d9nOw==}
+    dev: true
 
   /@types/lodash@4.17.16:
     resolution: {integrity: sha512-HX7Em5NYQAXKW+1T+FiuG27NGwzJfCX3s1GjOa7ujxZa52kjJLOr4FUxT+giF6Tgxv1e+/czV/iTtBw27WTU9g==}
@@ -1340,6 +1350,10 @@ packages:
     dev: false
     optional: true
 
+  /inflected@1.1.7:
+    resolution: {integrity: sha512-3lz7idKIPmKvz0wqlu1PUPSg5strJnCh2v2NldPQy13Fmd6WsWQ5yExDoiIX48lQ9mo8N7ztdDlkZxOauZ/E5g==}
+    dev: false
+
   /inflection@1.13.4:
     resolution: {integrity: sha512-6I/HUDeYFfuNCVS3td055BaXBwKYuzw7K3ExVMStBowKo9oOAMJIXIHvdyR3iboTCp1b+1i5DSkIZTcwIktuDw==}
     engines: {'0': node >= 0.4.0}
@@ -1434,6 +1448,14 @@ packages:
 
   /json-schema-traverse@1.0.0:
     resolution: {integrity: sha512-NM8/P9n3XjXhIZn1lLhkFaACTOURQXjWhV4BA/RnOv8xvgqtqpAX9IO4mRQxSx1Rlo4tqzeqb0sOlruaOy3dug==}
+
+  /jsonapi-serializer@3.6.9:
+    resolution: {integrity: sha512-LeRPlP93Mz6+Klu13OKcnXNLvtH1gbeo/yfThqihAMw7vUBCWWs6jHImpR/tQwzAxJi7F1+bfVJxeHoNCrbZiQ==}
+    engines: {node: '>=0.12'}
+    dependencies:
+      inflected: 1.1.7
+      lodash: 4.17.21
+    dev: false
 
   /lodash.clonedeep@4.5.0:
     resolution: {integrity: sha512-H5ZhCF25riFd9uB5UCkVKo61m3S/xZk1x4wA6yp/L3RFP6Z/eHH1ymQcGLo7J3GMPfm0V/7m1tryHuGVxpqEBQ==}
