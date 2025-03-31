@@ -7,19 +7,20 @@ let server: Server;
 
 export const start = async () => {
   try {
+    console.log('🤖 Trying to initialize the server.');
     const app = express();
 
     /* 📡 Common middlewares. */
     app.use(express.json({ type: 'application/vnd.api+json' }))
 
     /* 🔧 Environment variables. */
-    const { PORT } = EnvironmentVariables.getEnvironmentVariables();
+    const { PORT } = EnvironmentVariables.environmentVariables;
 
     /* 📡 OpenAPI. */
     await OpenAPI.start(app);
 
     /* 🤖 Server. */
-    server = app.listen(PORT, () => console.log(`🤖 Server is running on PORT:${PORT}.`));
+    server = app.listen(PORT, () => console.log(`🤖 Server connection established successfully on 'PORT:${PORT}'.`));
   } catch (e) {
     const error = e as Error;
     error.message = `❌ Failed to start the server: ${error.message}.`;

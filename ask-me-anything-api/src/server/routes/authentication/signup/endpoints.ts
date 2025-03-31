@@ -10,7 +10,7 @@ import { EnvironmentVariables } from "@utils";
 
 const { UserModel } = Models;
 
-const { SALT_ROUNDS } = EnvironmentVariables.getEnvironmentVariables();
+const { SALT_ROUNDS } = EnvironmentVariables.environmentVariables;
 
 type Post = (
   request: Request<{}, {}, CreateUser>,

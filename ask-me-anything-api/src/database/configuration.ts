@@ -6,10 +6,13 @@ let connection: Sequelize;
 
 export const start = async () => {
   try {
+    console.log('💾 Trying to establish a database connection.');
+
     const storage = path.join(__dirname, '..', '..', '..', 'ask-me-anything-database', 'ask-me-anything.db');
 
     connection = new Sequelize({
       dialect: 'sqlite',
+      logging: false,
       models: [Models.UserModel],
       storage,
     });
