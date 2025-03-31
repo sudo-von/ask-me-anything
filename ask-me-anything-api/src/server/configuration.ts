@@ -2,6 +2,7 @@ import express from 'express';
 import { Server } from 'http';
 import { OpenAPI } from '@services';
 import { EnvironmentVariables } from '@utils';
+import { requestMiddlewares, responseMiddlewares } from './middlewares';
 
 let server: Server;
 
@@ -11,14 +12,17 @@ export const start = async () => {
 
     const app = express();
 
-    /* 📡 Common middlewares. */
-    app.use(express.json({ type: 'application/vnd.api+json' }));
+    /* 📡 Common request middlewares. */
+    requestMiddlewares(app);
 
-    /* 🔧 Environment variables. */
+    /* 🔒 Environment variables. */
     const { PORT } = EnvironmentVariables.environmentVariables;
 
-    /* 📡 OpenAPI. */
+    /* 🔧 OpenAPI. */
     await OpenAPI.start(app);
+
+    /* 📡 Common response middlewares. */
+    responseMiddlewares(app);
 
     /* 🤖 Server. */
     server = app.listen(PORT, () =>

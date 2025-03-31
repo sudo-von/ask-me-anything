@@ -60,7 +60,7 @@ export const start = async (app: Express) => {
       error: OpenAPIError,
       _request: Request,
       response: Response,
-      _next: NextFunction,
-    ) => openApiResponseMiddleware({ error, response }),
+      next: NextFunction,
+    ) => openApiResponseMiddleware({ error, next, response }),
   );
 };
