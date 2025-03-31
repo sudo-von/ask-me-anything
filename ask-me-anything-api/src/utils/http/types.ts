@@ -6,6 +6,6 @@ export type HttpStatusCodeValue = (typeof HTTP_STATUS_CODES)[HttpStatusCodeKey];
 export interface IHttpError {
   code: string;
   detail: string;
-  statusCode: HttpStatusCodeValue;
+  status: HttpStatusCodeValue;
   title: string;
 }

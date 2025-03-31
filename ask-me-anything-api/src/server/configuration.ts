@@ -2,7 +2,7 @@ import express from 'express';
 import { Server } from 'http';
 import { OpenAPI } from '@services';
 import { EnvironmentVariables } from '@utils';
-import { requestMiddlewares, responseMiddlewares } from './middlewares';
+import { applyRequestMiddleware, applyResponseMiddleware } from '@server';
 
 let server: Server;
 
@@ -13,7 +13,7 @@ export const start = async () => {
     const app = express();
 
     /* 📡 Common request middlewares. */
-    requestMiddlewares(app);
+    applyRequestMiddleware(app);
 
     /* 🔒 Environment variables. */
     const { PORT } = EnvironmentVariables.environmentVariables;
@@ -22,7 +22,7 @@ export const start = async () => {
     await OpenAPI.start(app);
 
     /* 📡 Common response middlewares. */
-    responseMiddlewares(app);
+    applyResponseMiddleware(app);
 
     /* 🤖 Server. */
     server = app.listen(PORT, () =>

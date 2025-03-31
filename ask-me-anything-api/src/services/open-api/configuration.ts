@@ -1,12 +1,7 @@
 import path from 'path';
-import { Express, NextFunction, Request, Response } from 'express';
+import { Express } from 'express';
 import { initialize } from 'express-openapi';
-import {
-  openApiRequestMiddleware,
-  openApiResponseMiddleware,
-} from './middlewares';
-import { HttpError, IHttpError } from '../../utils/http';
-import { HttpError as OpenAPIError } from 'express-openapi-validator/dist/framework/types';
+import { OpenAPI } from '@services';
 
 export const start = async (app: Express) => {
   /* 📄 Docs. */
@@ -20,10 +15,12 @@ export const start = async (app: Express) => {
     'ask-me-anything-core',
     'openapi.yaml',
   );
-  const paths = path.join(__dirname, '..', '..', 'server', 'routes');
+
+  /* 📡 Common request middlewares. */
+  OpenAPI.applyRequestMiddleware(app, openApi);
 
   /* ⚙️ Configuration. */
-  app.use(openApiRequestMiddleware({ apiSpec: openApi }));
+  const paths = path.join(__dirname, '..', '..', 'server', 'routes');
   await initialize({
     apiDoc: openApi,
     app,
@@ -35,32 +32,7 @@ export const start = async (app: Express) => {
     routesIndexFileRegExp: /(?:endpoints)?\.[tj]s$/,
     validateApiDoc: true,
   });
-  app.use(
-    (
-      error: IHttpError,
-      _request: Request,
-      response: Response,
-      next: NextFunction,
-    ) => {
-      if (error instanceof HttpError) {
-        console.log({ code: error });
-        response.status(error.statusCode).json({
-          code: error.code,
-          detail: error.detail,
-          statusCode: error.statusCode,
-          title: error.title,
-        });
-        return;
-      }
-      next();
-    },
-  );
-  app.use(
-    (
-      error: OpenAPIError,
-      _request: Request,
-      response: Response,
-      next: NextFunction,
-    ) => openApiResponseMiddleware({ error, next, response }),
-  );
+
+  /* 📡 Common response middlewares. */
+  OpenAPI.applyResponseMiddleware(app);
 };

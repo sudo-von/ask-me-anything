@@ -1,56 +1,44 @@
-import { NextFunction, Response } from 'express';
+import { Express, NextFunction, Request, Response } from 'express';
 import * as OpenApiValidator from 'express-openapi-validator';
-import { HttpError as OpenAPIHttpError } from 'express-openapi-validator/dist/framework/types';
+import { HttpError } from 'express-openapi-validator/dist/framework/types';
 import { Http } from '@utils';
+import { ValidationError } from '@server';
 
 const { HTTP_STATUS_CODES, isValidHttpStatusCodeKey } = Http;
 
-type OpenApiRequestMiddlewareParams = {
-  apiSpec: string;
-};
-
-export const openApiRequestMiddleware = ({
-  apiSpec,
-}: OpenApiRequestMiddlewareParams) =>
-  OpenApiValidator.middleware({
-    apiSpec,
-    validateRequests: true,
-    validateResponses: true,
-  });
-
-type OpenApiResponseMiddlewareParams = {
-  error: OpenAPIHttpError;
-  next: NextFunction;
-  response: Response<Http.IHttpError>;
-};
-
-export const openApiResponseMiddleware = ({
-  error,
-  next,
-  response,
-}: OpenApiResponseMiddlewareParams) => {
-  if (!(error instanceof OpenAPIHttpError)) {
-    return next();
-  }
-
-  const { message: detail, status: statusCode } = error;
-
-  const httpStatusCodeKey = Object.keys(HTTP_STATUS_CODES).find(
-    (httpStatusCodeKey) =>
-      isValidHttpStatusCodeKey(httpStatusCodeKey) &&
-      HTTP_STATUS_CODES[httpStatusCodeKey] === statusCode,
+export const applyRequestMiddleware = (app: Express, apiSpec: string) => {
+  app.use(
+    OpenApiValidator.middleware({
+      apiSpec,
+      validateRequests: true,
+      validateResponses: true,
+    })
   );
+};
 
-  let httpStatusCode: Http.HttpStatusCodeValue =
-    HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR;
-  if (httpStatusCodeKey && isValidHttpStatusCodeKey(httpStatusCodeKey)) {
-    httpStatusCode = HTTP_STATUS_CODES[httpStatusCodeKey];
-  }
+export const applyResponseMiddleware = (app: Express) => {
+  app.use((
+    error: Error,
+    _request: Request,
+    _response: Response<Http.IHttpError>,
+    next: NextFunction,
+  ) => {
+    const isInstanceOfHttpError = error instanceof HttpError;
 
-  response.status(httpStatusCode).json({
-    code: 'OPENAPI_ERROR',
-    detail,
-    statusCode: httpStatusCode,
-    title: 'There was an error validating the request.',
+    if (!isInstanceOfHttpError) {
+      return next(error);
+    }
+
+    const httpStatusCodeKey = Object.keys(HTTP_STATUS_CODES).find(
+      (httpStatusCodeKey) => isValidHttpStatusCodeKey(httpStatusCodeKey) && HTTP_STATUS_CODES[httpStatusCodeKey] === error.status,
+    );
+
+    let httpStatusCodeValue: Http.HttpStatusCodeValue = HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR;
+    if (httpStatusCodeKey && isValidHttpStatusCodeKey(httpStatusCodeKey)) {
+      httpStatusCodeValue = HTTP_STATUS_CODES[httpStatusCodeKey];
+    }
+
+    const validationError = new ValidationError({ detail: error.message, status: httpStatusCodeValue });
+    return next(validationError);
   });
 };
