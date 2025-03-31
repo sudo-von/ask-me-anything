@@ -13,5 +13,5 @@ export class HttpError extends Error implements IHttpError {
     this.name = this.constructor.name;
     this.statusCode = error.statusCode;
     this.title = error.title;
-  };
-};
+  }
+}

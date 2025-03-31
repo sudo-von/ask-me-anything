@@ -1,4 +1,4 @@
-import { Http } from "@utils";
+import { Http } from '@utils';
 
 const { HTTP_STATUS_CODES, HttpError } = Http;
 
@@ -11,4 +11,4 @@ export class HttpUsernameAlreadyInUseError extends HttpError {
       title: 'Username already in use.',
     });
   }
-};
+}

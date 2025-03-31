@@ -20,13 +20,7 @@ export const start = async (app: Express) => {
     'ask-me-anything-core',
     'openapi.yaml',
   );
-  const paths = path.join(
-    __dirname,
-    '..',
-    '..',
-    'server',
-    'routes',
-  );
+  const paths = path.join(__dirname, '..', '..', 'server', 'routes');
 
   /* ⚙️ Configuration. */
   app.use(openApiRequestMiddleware({ apiSpec: openApi }));
@@ -41,28 +35,32 @@ export const start = async (app: Express) => {
     routesIndexFileRegExp: /(?:endpoints)?\.[tj]s$/,
     validateApiDoc: true,
   });
-  app.use((
-    error: IHttpError,
-    _request: Request,
-    response: Response,
-    next: NextFunction
-  ) => {
-    if (error instanceof HttpError) {
-      console.log({ code: error })
-      response.status(error.statusCode).json({
-        code: error.code,
-        detail: error.detail,
-        statusCode: error.statusCode,
-        title: error.title,
-      });
-      return;
-    }
-    next();
-  });
-  app.use((
-    error: OpenAPIError,
-    _request: Request,
-    response: Response,
-    _next: NextFunction
-  ) => openApiResponseMiddleware({ error, response }));
+  app.use(
+    (
+      error: IHttpError,
+      _request: Request,
+      response: Response,
+      next: NextFunction,
+    ) => {
+      if (error instanceof HttpError) {
+        console.log({ code: error });
+        response.status(error.statusCode).json({
+          code: error.code,
+          detail: error.detail,
+          statusCode: error.statusCode,
+          title: error.title,
+        });
+        return;
+      }
+      next();
+    },
+  );
+  app.use(
+    (
+      error: OpenAPIError,
+      _request: Request,
+      response: Response,
+      _next: NextFunction,
+    ) => openApiResponseMiddleware({ error, response }),
+  );
 };

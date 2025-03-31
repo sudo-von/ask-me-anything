@@ -1,5 +1,5 @@
-import { HTTP_STATUS_CODES } from "./constants";
-import { HttpStatusCodeKey } from "./types";
+import { HTTP_STATUS_CODES } from './constants';
+import { HttpStatusCodeKey } from './types';
 
 export const isValidHttpStatusCodeKey = (
   httpStatusCodeKey: string,

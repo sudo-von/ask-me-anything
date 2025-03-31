@@ -39,4 +39,4 @@ export class UserModel extends Model {
   @Default('')
   @Column(DataType.STRING)
   declare username: string;
-};
+}

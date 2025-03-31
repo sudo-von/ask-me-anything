@@ -3,10 +3,10 @@ import {
   CreateUser,
   DeserializedBearerToken,
   DeserializedCreateUser,
-} from "./types";
+} from './types';
 
 export const deserializeCreateUser = (
-  createUser: CreateUser
+  createUser: CreateUser,
 ): DeserializedCreateUser => ({
   name: createUser.data.attributes.name,
   password: createUser.data.attributes.password,
@@ -14,12 +14,12 @@ export const deserializeCreateUser = (
 });
 
 export const serializeBearerToken = (
-  deserializedBearerToken: DeserializedBearerToken
+  deserializedBearerToken: DeserializedBearerToken,
 ): BearerToken => ({
   data: {
     attributes: {
       token: deserializedBearerToken.token,
     },
-    type: "bearerToken",
+    type: 'bearerToken',
   },
 });

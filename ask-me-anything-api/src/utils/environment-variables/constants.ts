@@ -1,3 +1,3 @@
-import { getEnvironmentVariables } from "./configuration";
+import { getEnvironmentVariables } from './configuration';
 
 export const environmentVariables = getEnvironmentVariables();

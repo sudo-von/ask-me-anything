@@ -12,7 +12,7 @@ export const start = async () => {
     const app = express();
 
     /* 📡 Common middlewares. */
-    app.use(express.json({ type: 'application/vnd.api+json' }))
+    app.use(express.json({ type: 'application/vnd.api+json' }));
 
     /* 🔧 Environment variables. */
     const { PORT } = EnvironmentVariables.environmentVariables;
@@ -21,7 +21,11 @@ export const start = async () => {
     await OpenAPI.start(app);
 
     /* 🤖 Server. */
-    server = app.listen(PORT, () => console.log(`🤖 Server connection established successfully on 'PORT:${PORT}'.`));
+    server = app.listen(PORT, () =>
+      console.log(
+        `🤖 Server connection established successfully on 'PORT:${PORT}'.`,
+      ),
+    );
   } catch (e) {
     const error = e as Error;
     error.message = `❌ Failed to start the server: ${error.message}.`;

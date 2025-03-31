@@ -15,7 +15,9 @@ export const getEnvironmentVariable = (name: string): string => {
 export const getEnvironmentVariables = (): EnvironmentVariables => {
   console.log('🔒 Loading environment variables.');
 
-  const { error } = dotenv.config({ path: path.join(__dirname, '..', '..', '..', '.env') });
+  const { error } = dotenv.config({
+    path: path.join(__dirname, '..', '..', '..', '.env'),
+  });
 
   if (error) {
     throw new Error(`❌ Failed to load dotenv: ${error.message}.`);
@@ -35,11 +37,16 @@ export const getEnvironmentVariables = (): EnvironmentVariables => {
   };
 };
 
-export const parseEnvironmentVariable = (name: string, value: string): number => {
+export const parseEnvironmentVariable = (
+  name: string,
+  value: string,
+): number => {
   const parsedEnvironmentVariable = Number(value);
 
   if (isNaN(parsedEnvironmentVariable)) {
-    throw new Error(`❌ Invalid value '${value}' for '${name}'. It must be a valid number`);
+    throw new Error(
+      `❌ Invalid value '${value}' for '${name}'. It must be a valid number`,
+    );
   }
 
   return parsedEnvironmentVariable;

@@ -9,6 +9,7 @@
     "start:build": "tsc",
     "start:development": "tsx watch src/main.ts",
     "start:production": "node dist/main.js",
+    "start:styling": "npm run styling:linter && npm run styling:prettier",
     "styling:linter": "eslint . --fix",
     "styling:prettier": "prettier . --write"
   },
