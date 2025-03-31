@@ -1,12 +1,8 @@
 import dotenv from 'dotenv';
 import path from 'path';
+import { EnvironmentVariables } from './types';
 
-type EnvironmentVariables = {
-  PORT: number;
-  SALT_ROUNDS: number;
-};
-
-const getEnvironmentVariable = (name: string): string => {
+export const getEnvironmentVariable = (name: string): string => {
   const environmentVariable = process.env[name];
 
   if (!environmentVariable) {
@@ -16,7 +12,7 @@ const getEnvironmentVariable = (name: string): string => {
   return environmentVariable;
 };
 
-const getEnvironmentVariables = (): EnvironmentVariables => {
+export const getEnvironmentVariables = (): EnvironmentVariables => {
   console.log('🔒 Loading environment variables.');
 
   const { error } = dotenv.config({ path: path.join(__dirname, '..', '..', '..', '.env') });
@@ -39,7 +35,7 @@ const getEnvironmentVariables = (): EnvironmentVariables => {
   };
 };
 
-const parseEnvironmentVariable = (name: string, value: string): number => {
+export const parseEnvironmentVariable = (name: string, value: string): number => {
   const parsedEnvironmentVariable = Number(value);
 
   if (isNaN(parsedEnvironmentVariable)) {
@@ -48,5 +44,3 @@ const parseEnvironmentVariable = (name: string, value: string): number => {
 
   return parsedEnvironmentVariable;
 };
-
-export const environmentVariables = getEnvironmentVariables();
