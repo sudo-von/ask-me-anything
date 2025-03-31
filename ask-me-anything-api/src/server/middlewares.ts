@@ -11,20 +11,24 @@ export const applyRequestMiddleware = (app: Express) => {
 };
 
 export const applyResponseMiddleware = (app: Express) => {
-  app.use((
-    error: Error,
-    _request: Request,
-    response: Response<Http.IHttpError>,
-    _next: NextFunction,
-  ) => {
-    const isInstanceOfHttpError = error instanceof HttpError;
-    const currentHttpError = isInstanceOfHttpError ? error : new InternalServerError();
+  app.use(
+    (
+      error: Error,
+      _request: Request,
+      response: Response<Http.IHttpError>,
+      _next: NextFunction,
+    ) => {
+      const isInstanceOfHttpError = error instanceof HttpError;
+      const currentHttpError = isInstanceOfHttpError
+        ? error
+        : new InternalServerError();
 
-    response.status(currentHttpError.status).json({
-      code: currentHttpError.code,
-      detail: currentHttpError.detail,
-      status: currentHttpError.status,
-      title: currentHttpError.title,
-    });
-  });
+      response.status(currentHttpError.status).json({
+        code: currentHttpError.code,
+        detail: currentHttpError.detail,
+        status: currentHttpError.status,
+        title: currentHttpError.title,
+      });
+    },
+  );
 };

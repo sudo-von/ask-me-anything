@@ -1,7 +1,7 @@
 import express from 'express';
 import { Server } from 'http';
 import { OpenAPI } from '@services';
-import { EnvironmentVariables } from '@utils';
+import EnvironmentVariables from '@utils';
 import { applyRequestMiddleware, applyResponseMiddleware } from '@server';
 
 let server: Server;
@@ -16,7 +16,7 @@ export const start = async () => {
     applyRequestMiddleware(app);
 
     /* 🔒 Environment variables. */
-    const { PORT } = EnvironmentVariables.environmentVariables;
+    const { PORT } = EnvironmentVariables;
 
     /* 🔧 OpenAPI. */
     await OpenAPI.start(app);
