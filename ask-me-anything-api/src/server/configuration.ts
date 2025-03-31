@@ -8,6 +8,7 @@ let server: Server;
 export const start = async () => {
   try {
     console.log('🤖 Trying to initialize the server.');
+
     const app = express();
 
     /* 📡 Common middlewares. */

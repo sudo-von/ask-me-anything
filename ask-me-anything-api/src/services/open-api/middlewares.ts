@@ -30,7 +30,7 @@ export const openApiResponseMiddleware = ({ error, response }: OpenApiResponseMi
     Http.isValidHttpStatusCodeKey(httpStatusCodeKey) && Http.HTTP_STATUS_CODES[httpStatusCodeKey] === statusCode
   );
 
-  let httpStatusCode: Http.HttpStatusCode = Http.HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR;
+  let httpStatusCode: Http.HttpStatusCodeValue = Http.HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR;
   if (httpStatusCodeKey && Http.isValidHttpStatusCodeKey(httpStatusCodeKey)) {
     httpStatusCode = Http.HTTP_STATUS_CODES[httpStatusCodeKey];
   }

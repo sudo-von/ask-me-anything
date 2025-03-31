@@ -1,16 +1,15 @@
 import { Models } from "@database";
 import { Request, Response } from "express";
 import { BearerToken, CreateUser } from "./types";
-import { deserializeCreateUser } from "./deserializers";
-import { usernameAlreadyInUse } from "./errors";
-import { Http } from "@services";
-import { serializeBearerToken } from "./serializers";
+import { HttpUsernameAlreadyInUseError } from "./errors";
+import { deserializeCreateUser, serializeBearerToken } from "./mappers";
 import bcrypt from "bcrypt";
 import { EnvironmentVariables } from "@utils";
-
-const { UserModel } = Models;
+import { Http } from "utils";
 
 const { SALT_ROUNDS } = EnvironmentVariables.environmentVariables;
+const { HTTP_STATUS_CODES } = Http;
+const { UserModel } = Models;
 
 type Post = (
   request: Request<{}, {}, CreateUser>,
@@ -27,7 +26,7 @@ const post: Post = async (request, response) => {
   });
 
   if (existingUser) {
-    throw usernameAlreadyInUse;
+    throw new HttpUsernameAlreadyInUseError();
   }
 
   const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
@@ -39,7 +38,7 @@ const post: Post = async (request, response) => {
     username,
   });
 
-  response.status(Http.HTTP_STATUS_CODES.CREATED).json(
+  response.status(HTTP_STATUS_CODES.CREATED).json(
     serializeBearerToken({
       token: "fake.user.token",
     })

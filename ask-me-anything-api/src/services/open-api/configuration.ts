@@ -5,7 +5,7 @@ import {
   openApiRequestMiddleware,
   openApiResponseMiddleware,
 } from './middlewares';
-import { HttpError, IHttpError } from '../http';
+import { HttpError, IHttpError } from '../../utils/http';
 import { HttpError as OpenAPIError } from 'express-openapi-validator/dist/framework/types';
 
 export const start = async (app: Express) => {
@@ -35,7 +35,7 @@ export const start = async (app: Express) => {
     app,
     paths,
     logger: console,
-    pathsIgnore: /^(.*deserializers|.*errors|.*serializers|.*test|.*types)$/,
+    pathsIgnore: /^(.*errors|.*index|.*mappers|.*test|.*types)$/,
     promiseMode: true,
     routesGlob: '**/*.{ts,js}',
     routesIndexFileRegExp: /(?:endpoints)?\.[tj]s$/,

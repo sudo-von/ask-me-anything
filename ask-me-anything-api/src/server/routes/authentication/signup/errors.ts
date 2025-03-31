@@ -1,13 +1,14 @@
-import { Http } from "@services";
+import { Http } from "@utils";
 
-const {
-  createHttpError,
-  HTTP_STATUS_CODES
-} = Http;
+const { HTTP_STATUS_CODES, HttpError } = Http;
 
-export const usernameAlreadyInUse = createHttpError({
-  code: 'USERNAME_ALREADY_IN_USE',
-  detail: 'This username is already in use. Please choose another one.',
-  statusCode: HTTP_STATUS_CODES.CONFLICT,
-  title: 'Username already in use.',
-});
+export class HttpUsernameAlreadyInUseError extends HttpError {
+  constructor() {
+    super({
+      code: 'USERNAME_ALREADY_IN_USE',
+      detail: 'This username is already in use. Please choose another one.',
+      statusCode: HTTP_STATUS_CODES.CONFLICT,
+      title: 'Username already in use.',
+    });
+  }
+};
