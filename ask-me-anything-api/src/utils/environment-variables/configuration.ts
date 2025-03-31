@@ -43,7 +43,7 @@ const parseEnvironmentVariable = (name: string, value: string): number => {
   const parsedEnvironmentVariable = Number(value);
 
   if (isNaN(parsedEnvironmentVariable)) {
-    throw new Error(`❌ Invalid value '${parsedEnvironmentVariable}' for '${name}'. It must be a valid number`);
+    throw new Error(`❌ Invalid value '${value}' for '${name}'. It must be a valid number`);
   }
 
   return parsedEnvironmentVariable;
