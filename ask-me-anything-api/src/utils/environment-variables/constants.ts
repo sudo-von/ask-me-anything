@@ -1,3 +1,11 @@
 import { getEnvironmentVariables } from './configuration';
 
-export default getEnvironmentVariables();
+export const ENVIRONMENTS = [
+  'development',
+  'qa',
+  'staging',
+  'sandbox',
+  'production',
+] as const;
+
+export const VARIABLES = getEnvironmentVariables();

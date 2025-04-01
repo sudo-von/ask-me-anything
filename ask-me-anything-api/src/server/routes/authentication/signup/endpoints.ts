@@ -4,10 +4,10 @@ import { BearerToken, CreateUser } from './types';
 import { HttpUsernameAlreadyInUseError } from './errors';
 import { deserializeCreateUser, serializeBearerToken } from './mappers';
 import bcrypt from 'bcrypt';
-import EnvironmentVariables from '@utils';
+import { EnvironmentVariables } from '@utils';
 import { Http } from 'utils';
 
-const { SALT_ROUNDS } = EnvironmentVariables;
+const { SALT_ROUNDS } = EnvironmentVariables.VARIABLES;
 const { HTTP_STATUS_CODES } = Http;
 const { UserModel } = Models;
 
