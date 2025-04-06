@@ -1,11 +1,11 @@
 import { Express, NextFunction, Request, Response } from 'express';
 import * as OpenApiValidator from 'express-openapi-validator';
 import { HttpError } from 'express-openapi-validator/dist/framework/types';
-import { ValidationError } from '@server';
 import { isValidStatusCodeKey, STATUS_CODES } from '@utils/http';
 import { openApiPaths, openApiYaml } from './constants';
 import { getLogger } from '@utils/logger';
 import { initialize } from 'express-openapi';
+import { ValidationError } from '@server/errors';
 
 const logger = getLogger();
 

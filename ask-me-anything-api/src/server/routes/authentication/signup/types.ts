@@ -1,8 +1,8 @@
-import { Routes } from '@server';
+import { DeserializedSchema } from '@server/routes';
 import { components } from '@sudo-von/ask-me-anything-core';
 
-export type BearerToken = components['schemas']['BearerToken'];
-export type CreateUser = components['schemas']['CreateUser'];
+export type DeserializedBearerToken = DeserializedSchema<'BearerToken'>;
+export type DeserializedCreateUser = DeserializedSchema<'CreateUser'>;
 
-export type DeserializedBearerToken = Routes.DeserializedSchema<'BearerToken'>;
-export type DeserializedCreateUser = Routes.DeserializedSchema<'CreateUser'>;
+export type SerializedBearerToken = components['schemas']['BearerToken'];
+export type SerializedCreateUser = components['schemas']['CreateUser'];

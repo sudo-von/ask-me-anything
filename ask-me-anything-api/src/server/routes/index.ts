@@ -1,2 +1,2 @@
-export * as Authentication from './authentication';
+export * from './authentication';
 export * from './types';

@@ -1,19 +1,17 @@
-import { Models } from '@database';
 import { Request, Response } from 'express';
-import { BearerToken, CreateUser } from './types';
-import { HttpUsernameAlreadyInUseError } from './errors';
+import { SerializedBearerToken, SerializedCreateUser } from './types';
+import { UsernameAlreadyInUseServerError } from './errors';
 import { deserializeCreateUser, serializeBearerToken } from './mappers';
 import bcrypt from 'bcrypt';
-import { EnvironmentVariables } from '@utils';
-import { Http } from 'utils';
+import { getEnvironmentVariables } from '@services/environment-variables';
+import { UserModel } from '@database/models';
+import { STATUS_CODES } from '@utils/http';
 
-const { SALT_ROUNDS } = EnvironmentVariables.VARIABLES;
-const { HTTP_STATUS_CODES } = Http;
-const { UserModel } = Models;
+const { SALT_ROUNDS } = getEnvironmentVariables();
 
 type Post = (
-  request: Request<object, object, CreateUser>,
-  response: Response<BearerToken>,
+  request: Request<unknown, unknown, SerializedCreateUser>,
+  response: Response<SerializedBearerToken>,
 ) => Promise<void>;
 
 const post: Post = async (request, response) => {
@@ -26,19 +24,19 @@ const post: Post = async (request, response) => {
   });
 
   if (existingUser) {
-    throw new HttpUsernameAlreadyInUseError();
+    throw new UsernameAlreadyInUseServerError();
   }
 
   const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
 
-  const result = await UserModel.create({
+  await UserModel.create({
     avatar: 'fake-avatar',
     name,
     password: hashedPassword,
     username,
   });
 
-  response.status(HTTP_STATUS_CODES.CREATED).json(
+  response.status(STATUS_CODES.CREATED).json(
     serializeBearerToken({
       token: 'fake.user.token',
     }),
