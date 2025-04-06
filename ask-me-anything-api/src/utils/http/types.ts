@@ -1,11 +1,11 @@
-import { HTTP_STATUS_CODES } from './constants';
+import { STATUS_CODES } from './constants';
 
-export type HttpStatusCodeKey = keyof typeof HTTP_STATUS_CODES;
-export type HttpStatusCodeValue = (typeof HTTP_STATUS_CODES)[HttpStatusCodeKey];
+export type StatusCodeKey = keyof typeof STATUS_CODES;
+export type StatusCodeValue = (typeof STATUS_CODES)[StatusCodeKey];
 
 export interface IHttpError {
   code: string;
   detail: string;
-  status: HttpStatusCodeValue;
+  status: StatusCodeValue;
   title: string;
 }

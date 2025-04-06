@@ -1,9 +1,9 @@
-import { HttpStatusCodeValue, IHttpError } from './types';
+import { IHttpError, StatusCodeValue } from './types';
 
 export class HttpError extends Error implements IHttpError {
   code: string;
   detail: string;
-  status: HttpStatusCodeValue;
+  status: StatusCodeValue;
   title: string;
 
   constructor(error: IHttpError) {
