@@ -13,7 +13,7 @@ import {
   timestamps: true,
 })
 export class UserModel extends Model {
-  /* 🔑 Identifiers. */
+  /* 🔑 Keys. */
   @PrimaryKey
   @Default(DataType.UUIDV4)
   @Column(DataType.UUID)
