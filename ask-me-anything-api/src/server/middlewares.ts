@@ -1,9 +1,10 @@
 import cors from 'cors';
 import express, { Express, NextFunction, Request, Response } from 'express';
-import { Http } from '@utils';
-import { InternalServerError } from '@server';
+import { HttpError, IHttpError } from '@utils/http';
+import { getLogger } from '@utils/logger';
+import { InternalServerError } from './errors';
 
-const { HttpError } = Http;
+const logger = getLogger();
 
 export const applyRequestMiddleware = (app: Express) => {
   app.use(cors());
@@ -15,19 +16,20 @@ export const applyResponseMiddleware = (app: Express) => {
     (
       error: Error,
       _request: Request,
-      response: Response<Http.IHttpError>,
+      response: Response<IHttpError>,
       _next: NextFunction,
     ) => {
-      const isInstanceOfHttpError = error instanceof HttpError;
-      const currentHttpError = isInstanceOfHttpError
-        ? error
-        : new InternalServerError();
+      logger.error(error);
 
-      response.status(currentHttpError.status).json({
-        code: currentHttpError.code,
-        detail: currentHttpError.detail,
-        status: currentHttpError.status,
-        title: currentHttpError.title,
+      const isInstanceOfHttpError = error instanceof HttpError;
+
+      const httpError = isInstanceOfHttpError ? error : new InternalServerError();
+
+      response.status(httpError.status).json({
+        code: httpError.code,
+        detail: httpError.detail,
+        status: httpError.status,
+        title: httpError.title,
       });
     },
   );

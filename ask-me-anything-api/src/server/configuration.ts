@@ -1,32 +1,30 @@
 import express from 'express';
 import { Server } from 'http';
-import { OpenAPI } from '@services';
-import { EnvironmentVariables } from '@utils';
 import { applyRequestMiddleware, applyResponseMiddleware } from '@server';
+import { getLogger } from '@utils/logger';
+import { getEnvironmentVariables } from '@services/environment-variables';
+import { applyOpenApiMiddleware, applyOpenApiRequestMiddleware, applyOpenApiResponseMiddleware } from 'libs/open-api';
+
+const { PORT } = getEnvironmentVariables();
+
+const logger = getLogger();
 
 let server: Server;
 
 export const start = async () => {
   try {
-    console.log('🤖 Trying to initialize the server.');
+    logger.info('🤖 Trying to initialize the server.');
 
     const app = express();
 
-    /* 📡 Common request middlewares. */
     applyRequestMiddleware(app);
-
-    /* 🔒 Environment variables. */
-    const { PORT } = EnvironmentVariables.VARIABLES;
-
-    /* 🔧 OpenAPI. */
-    await OpenAPI.start(app);
-
-    /* 📡 Common response middlewares. */
+    applyOpenApiRequestMiddleware(app);
+    applyOpenApiMiddleware(app);
+    applyOpenApiResponseMiddleware(app);
     applyResponseMiddleware(app);
 
-    /* 🤖 Server. */
     server = app.listen(PORT, () =>
-      console.log(
+      logger.info(
         `🤖 Server connection established successfully on 'PORT:${PORT}'.`,
       ),
     );
@@ -40,12 +38,12 @@ export const start = async () => {
 export const close = () => {
   try {
     if (!server) {
-      console.log('🤖 Server connection not found.');
+      logger.info('🤖 Server connection not found.');
       return;
     }
 
     server.close();
-    console.log('🤖 Server connection closed successfully.');
+    logger.info('🤖 Server connection closed successfully.');
   } catch (e) {
     const error = e as Error;
     error.message = `❌ Failed to close the server connection: ${error.message}.`;

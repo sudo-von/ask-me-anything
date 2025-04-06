@@ -9,7 +9,7 @@ import { initialize } from 'express-openapi';
 
 const logger = getLogger();
 
-export const applyOpenApi = (app: Express) =>
+export const applyOpenApiMiddleware = (app: Express) =>
   initialize({
     apiDoc: openApiYaml,
     app,
