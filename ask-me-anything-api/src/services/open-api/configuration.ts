@@ -1,11 +1,14 @@
 import path from 'path';
 import { Express } from 'express';
 import { initialize } from 'express-openapi';
-import { OpenAPI } from '@services';
+import { applyRequestMiddleware, applyResponseMiddleware } from './middlewares';
+import { getLogger } from '@utils/logger';
+
+const logger = getLogger();
 
 export const start = async (app: Express) => {
   /* 📄 Docs. */
-  const openApi = path.join(
+  const apiDoc = path.join(
     __dirname,
     '..',
     '..',
@@ -17,15 +20,16 @@ export const start = async (app: Express) => {
   );
 
   /* 📡 Common request middlewares. */
-  OpenAPI.applyRequestMiddleware(app, openApi);
+  applyRequestMiddleware(app, apiDoc);
 
   /* ⚙️ Configuration. */
   const paths = path.join(__dirname, '..', '..', 'server', 'routes');
+
   await initialize({
-    apiDoc: openApi,
+    apiDoc,
     app,
     paths,
-    logger: console,
+    logger,
     pathsIgnore: /^(.*errors|.*index|.*mappers|.*test|.*types)$/,
     promiseMode: true,
     routesGlob: '**/*.{ts,js}',
@@ -34,5 +38,5 @@ export const start = async (app: Express) => {
   });
 
   /* 📡 Common response middlewares. */
-  OpenAPI.applyResponseMiddleware(app);
+  applyResponseMiddleware(app);
 };
