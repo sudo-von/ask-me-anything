@@ -6,4 +6,5 @@ export type EnvironmentVariables = {
   ENVIRONMENT: Environment;
   PORT: number;
   SALT_ROUNDS: number;
+  SECRET_KEY: string;
 };

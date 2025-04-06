@@ -45,10 +45,12 @@ export const getEnvironmentVariables = (): EnvironmentVariables => {
   const ENVIRONMENT = getEnvironmentVariableAsEnvironment('ENVIRONMENT');
   const PORT = getEnvironmentVariableAsNumber('PORT');
   const SALT_ROUNDS = getEnvironmentVariableAsNumber('SALT_ROUNDS');
+  const SECRET_KEY = getEnvironmentVariable('SECRET_KEY');
 
   return {
     ENVIRONMENT,
     PORT,
     SALT_ROUNDS,
+    SECRET_KEY,
   };
 };
