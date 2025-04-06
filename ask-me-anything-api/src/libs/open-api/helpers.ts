@@ -3,18 +3,36 @@ import * as OpenApiValidator from 'express-openapi-validator';
 import { HttpError } from 'express-openapi-validator/dist/framework/types';
 import { ValidationError } from '@server';
 import { isValidStatusCodeKey, STATUS_CODES } from '@utils/http';
+import { openApiPaths, openApiYaml } from './constants';
+import { getLogger } from '@utils/logger';
+import { initialize } from 'express-openapi';
 
-export const applyRequestMiddleware = (app: Express, apiSpec: string) => {
+const logger = getLogger();
+
+export const applyOpenApi = (app: Express) =>
+  initialize({
+    apiDoc: openApiYaml,
+    app,
+    paths: openApiPaths,
+    logger,
+    pathsIgnore: /^(.*errors|.*index|.*mappers|.*test|.*types)$/,
+    promiseMode: true,
+    routesGlob: '**/*.{ts,js}',
+    routesIndexFileRegExp: /(?:endpoints)?\.[tj]s$/,
+    validateApiDoc: true,
+  });
+
+export const applyOpenApiRequestMiddleware = (app: Express) => {
   app.use(
     OpenApiValidator.middleware({
-      apiSpec,
+      apiSpec: openApiYaml,
       validateRequests: true,
       validateResponses: true,
     }),
   );
 };
 
-export const applyResponseMiddleware = (app: Express) => {
+export const applyOpenApiResponseMiddleware = (app: Express) => {
   app.use(
     (
       error: Error,
