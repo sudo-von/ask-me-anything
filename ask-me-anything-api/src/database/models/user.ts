@@ -13,13 +13,11 @@ import {
   timestamps: true,
 })
 export class UserModel extends Model {
-  /* 🔑 Keys. */
   @PrimaryKey
   @Default(DataType.UUIDV4)
   @Column(DataType.UUID)
   declare id: string;
 
-  /* 🗃️ Rest. */
   @AllowNull(false)
   @Default('')
   @Column(DataType.STRING)
