@@ -1,14 +1,14 @@
 import { LoggerOptions } from 'pino';
-import * as EnvironmentVariablesService from '@services/environment-variables';
+import { getEnvironmentVariables } from '@services/environment-variables';
 
-const { ENVIRONMENT } = EnvironmentVariablesService.getEnvironmentVariables();
+const { ENVIRONMENT } = getEnvironmentVariables();
 
 const isProduction = ENVIRONMENT === 'production';
 const isNotProduction = !isProduction;
 
 export const loggerOptions: LoggerOptions = {
   base: {
-    app: 'ask-me-anything',
+    app: 'ask-me-anything-api',
   },
   level: isProduction ? 'info' : 'debug',
   transport: {

@@ -1,4 +1,4 @@
-import pino, { Logger } from 'pino';
+import pino from 'pino';
 import { loggerOptions } from './constants';
 
-export const getLogger = (): Logger => pino(loggerOptions);
+export const getLogger = () => pino(loggerOptions);
