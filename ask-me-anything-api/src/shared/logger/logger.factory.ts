@@ -1,12 +1,8 @@
-import { Logger } from './logger.types'
-import { DefaultLogger } from './logger.default';
+import { ILoggerService } from './logger.types'
+import { LoggerService } from './logger.service';
 
-/**
- * Utility class responsible for creating instances of loggers.
- * It provides a centralized way to instantiate loggers for different applications or components.
- */
 export class LoggerFactory {
-  static create(app: string): Logger {
-    return new DefaultLogger(app);
+  static create(app: string): ILoggerService {
+    return new LoggerService(app);
   };
 };

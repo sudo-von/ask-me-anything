@@ -1,5 +1,5 @@
 import pino from 'pino';
-import { Logger } from './logger.types';
+import { ILoggerService } from './logger.types';
 import { getEnvironmentVariables } from '@src/shared/environment-variables';
 
 const { ENVIRONMENT } = getEnvironmentVariables();
@@ -7,12 +7,7 @@ const { ENVIRONMENT } = getEnvironmentVariables();
 const isProduction = ENVIRONMENT === 'production';
 const isNotProduction = !isProduction;
 
-/**
- * This logger is configured based on the environment.
- * In production, the logger outputs 'info' level logs and higher.
- * In non-production environments, the logger outputs 'debug' level logs.
- */
-export class DefaultLogger implements Logger {
+export class LoggerService implements ILoggerService {
   private logger;
 
   constructor(app: string) {
