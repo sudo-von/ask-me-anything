@@ -6,3 +6,5 @@ export interface ILoggerService {
   trace: (message: string, meta?: object) => void;
   warn: (message: string, meta?: object) => void;
 };
+
+export type LoggerName = 'api-service' | 'data-access-service';

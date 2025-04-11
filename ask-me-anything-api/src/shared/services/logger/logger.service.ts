@@ -1,5 +1,5 @@
 import pino, { Logger } from 'pino';
-import { ILoggerService } from './logger.types';
+import { ILoggerService, LoggerName } from './logger.types';
 import { ConfigurationService } from '@services/configuration';
 
 const configurationService = new ConfigurationService();
@@ -10,13 +10,13 @@ const isNotProduction = !isProduction;
 export class LoggerService implements ILoggerService {
   private logger: Logger;
 
-  constructor(app: string) {
+  constructor(loggerName: LoggerName) {
     const colorize = isNotProduction;
     const level = isProduction ? 'info' : 'debug';
     const target = isNotProduction ? 'pino-pretty' : '';
 
     this.logger = pino({
-      base: { app },
+      base: { app: loggerName },
       level,
       transport: {
         target,
