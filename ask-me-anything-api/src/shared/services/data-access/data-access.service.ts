@@ -1,8 +1,9 @@
 import path from 'path';
 import { Sequelize } from 'sequelize-typescript';
 import { UserModel } from '@apps/user-app/data-access/models/user.model';
+import { IDataAccessService } from './data-access.types';
 
-export class DataAccessService {
+export class DataAccessService implements IDataAccessService {
   connection: Sequelize;
 
   constructor() {

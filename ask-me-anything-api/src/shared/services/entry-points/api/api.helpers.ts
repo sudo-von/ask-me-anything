@@ -1,5 +1,5 @@
-import { STATUS_CODES } from './constants';
-import { StatusCodeKey } from './types';
+import { STATUS_CODES } from './api.constants';
+import { StatusCodeKey } from './api.types';
 
 export const isValidStatusCodeKey = (
   statusCodeKey: string,
