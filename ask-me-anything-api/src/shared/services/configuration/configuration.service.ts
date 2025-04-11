@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 import path from 'path';
 import { ENVIRONMENTS } from './configuration.constants.';
-import { Environment, ConfigurationKey, Configuration, IConfigurationService, ConfigurationValue } from './configuration.types';
+import { Environment, ConfigurationKey, Configuration, IConfigurationService } from './configuration.types';
 
 const { error } = dotenv.config({
   path: path.join(process.cwd(), '.env'),
@@ -13,7 +13,7 @@ if (error) {
 }
 
 export class ConfigurationService implements IConfigurationService {
-  get = (configurationKey: ConfigurationKey): ConfigurationValue => {
+  get = <T extends ConfigurationKey>(configurationKey: T): Configuration[T] => {
     const ENVIRONMENT = this.getConfigurationAsEnvironment('ENVIRONMENT');
     const PORT = this.getConfigurationAsNumber('PORT');
     const SALT_ROUNDS = this.getConfigurationAsNumber('SALT_ROUNDS');

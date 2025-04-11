@@ -8,10 +8,9 @@ export type Configuration = {
 };
 
 export type ConfigurationKey = keyof Configuration;
-export type ConfigurationValue = Configuration[ConfigurationKey];
 
 export interface IConfigurationService {
-  get: (configurationKey: ConfigurationKey) => ConfigurationValue;
+  get: <K extends ConfigurationKey>(configurationKey: K) => Configuration[K];
 };
 
 export type Environment = (typeof ENVIRONMENTS)[number];
