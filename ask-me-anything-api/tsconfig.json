@@ -30,11 +30,10 @@
     "moduleResolution": "node" /* Specify how TypeScript looks up a file from a given module specifier. */,
     "baseUrl": "./src" /* Specify the base directory to resolve non-relative module names. */,
     "paths": {
-      "@database": ["database"],
-      "@infrastructure/*": ["infrastructure/*"],
-      "@server": ["server"],
-      "@services": ["services"],
-      "@utils": ["utils"]
+      "@apps/*": ["./apps/*"],
+      "@user-app/*": ["./apps/user-app/*"],
+      "@services/*": ["./shared/services/*"],
+      "@src/*": ["./*"]
     } /* Specify a set of entries that re-map imports to additional lookup locations. */,
     // "rootDirs": [],                                   /* Allow multiple folders to be treated as one when resolving modules. */
     // "typeRoots": [],                                  /* Specify multiple folders that act like './node_modules/@types'. */
@@ -113,5 +112,8 @@
     /* Completeness */
     // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
     "skipLibCheck": false /* Skip type checking all .d.ts files. */
+  },
+  "ts-node": {
+    "require": ["tsconfig-paths/register"]
   }
 }
