@@ -2,6 +2,9 @@ import cors from 'cors';
 import express, { Express, NextFunction, Request, Response } from 'express';
 import { ApiError } from './api.types';
 import { ApiBaseError, InternalServerError } from './api.errors';
+import { LoggerFactory } from '@services/logger';
+
+const loggerService = LoggerFactory.create('api-service');
 
 export const applyRequestMiddleware = (app: Express) => {
   app.use(cors());
@@ -16,7 +19,7 @@ export const applyResponseMiddleware = (app: Express) => {
       response: Response<ApiError>,
       _next: NextFunction,
     ) => {
-      console.error(error);
+      loggerService.error(error);
 
       const isInstanceOfBaseApiError = error instanceof ApiBaseError;
 

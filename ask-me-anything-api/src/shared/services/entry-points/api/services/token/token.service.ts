@@ -1,7 +1,7 @@
 import jsonwebtoken from 'jsonwebtoken';
 import { ConfigurationService } from '@services/configuration';
-import { DeserializedUser } from '../openapi/types';
 import { AbstractTokenService } from './token.abstracts';
+import { DeserializedUser } from './token.types';
 
 const configurationService = new ConfigurationService();
 const SECRET_KEY = configurationService.get('SECRET_KEY');

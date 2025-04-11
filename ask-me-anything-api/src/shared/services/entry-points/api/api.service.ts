@@ -1,11 +1,15 @@
 import express, { Express } from 'express';
 import { Server } from 'http';
-import { applyOpenApiMiddleware, applyOpenApiRequestMiddleware, applyOpenApiResponseMiddleware } from '@src/shared/entry-points/api/open-api';
+import { applyOpenApiMiddleware, applyOpenApiRequestMiddleware, applyOpenApiResponseMiddleware } from '@services/entry-points/api/services/openapi';
 import { IApiService } from './api.types';
-import { getEnvironmentVariables } from '@src/shared/services/environment-variables';
+import { ConfigurationService } from '@services/configuration';
 import { applyRequestMiddleware, applyResponseMiddleware } from './api.middlewares';
+import { LoggerFactory } from '@services/logger';
 
-const { PORT } = getEnvironmentVariables();
+const configurationService = new ConfigurationService();
+const loggerService = LoggerFactory.create('api-service');
+
+const PORT = configurationService.get('PORT');
 
 export class ApiService implements IApiService {
   app?: Express;
@@ -13,7 +17,7 @@ export class ApiService implements IApiService {
 
   async init(): Promise<void> {
     try {
-      console.info('🤖 Trying to initialize the server.');
+      loggerService.info('Trying to initialize the server.');
 
       this.app = express();
 
@@ -24,13 +28,13 @@ export class ApiService implements IApiService {
       applyResponseMiddleware(this.app);
 
       this.server = this.app.listen(PORT, () =>
-        console.info(
-          `🤖 Server connection established successfully on 'PORT:${PORT}'.`,
+        loggerService.info(
+          `Server connection established successfully on 'PORT:${PORT}'.`,
         ),
       );
     } catch (e) {
       const error = e as Error;
-      error.message = `❌ Failed to init the server: ${error.message}.`;
+      error.message = `Failed to init the server: ${error.message}.`;
       throw error;
     }
   };
@@ -38,15 +42,17 @@ export class ApiService implements IApiService {
   async close(): Promise<void> {
     try {
       if (!this.server) {
-        console.info('🤖 Server connection not found.');
+        loggerService.warn('Server connection not found.');
         return;
       }
 
-      this.server.close();
-      console.info('🤖 Server connection closed successfully.');
+      this.server.close((error) => {
+        if (error) throw error;
+      });
+      loggerService.info('Server connection closed successfully.');
     } catch (e) {
       const error = e as Error;
-      error.message = `❌ Failed to close the server connection: ${error.message}.`;
+      error.message = `Failed to close the server connection: ${error.message}.`;
       throw error;
     }
   };
