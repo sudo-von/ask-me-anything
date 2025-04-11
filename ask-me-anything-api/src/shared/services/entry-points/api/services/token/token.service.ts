@@ -1,12 +1,12 @@
 import jsonwebtoken from 'jsonwebtoken';
 import { ConfigurationService } from '@services/configuration';
-import { DeserializedUser } from '../api-documentation/types';
-import { AbstractApiTokenService } from './api-token.abstracts';
+import { DeserializedUser } from '../openapi/types';
+import { AbstractTokenService } from './token.abstracts';
 
 const configurationService = new ConfigurationService();
 const SECRET_KEY = configurationService.get('SECRET_KEY');
 
-export class ApiTokenService extends AbstractApiTokenService {
+export class TokenService extends AbstractTokenService {
   static sign(deserializedUser: DeserializedUser): string {
     try {
       const token = jsonwebtoken.sign(deserializedUser, SECRET_KEY, { algorithm: 'HS256', expiresIn: 60 * 60 });
