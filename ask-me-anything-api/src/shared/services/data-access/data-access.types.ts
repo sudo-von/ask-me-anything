@@ -1,4 +1,3 @@
-export interface IDataAccessService {
-  init: () => Promise<void>;
-  close: () => Promise<void>;
-};
+import { IService } from "@services/services.types";
+
+export interface IDataAccessService extends IService { };
