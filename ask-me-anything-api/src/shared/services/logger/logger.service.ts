@@ -1,23 +1,27 @@
-import pino from 'pino';
+import pino, { Logger } from 'pino';
 import { ILoggerService } from './logger.types';
-import { getEnvironmentVariables } from '@src/shared/services/environment-variables';
+import { ConfigurationService } from '@services/configuration';
 
-const { ENVIRONMENT } = getEnvironmentVariables();
-
-const isProduction = ENVIRONMENT === 'production';
+const configurationService = new ConfigurationService();
+const environment = configurationService.get('ENVIRONMENT');
+const isProduction = environment === 'production';
 const isNotProduction = !isProduction;
 
 export class LoggerService implements ILoggerService {
-  private logger;
+  private logger: Logger;
 
   constructor(app: string) {
+    const colorize = isNotProduction;
+    const level = isProduction ? 'info' : 'debug';
+    const target = isNotProduction ? 'pino-pretty' : '';
+
     this.logger = pino({
       base: { app },
-      level: isProduction ? 'info' : 'debug',
+      level,
       transport: {
-        target: isNotProduction ? 'pino-pretty' : '',
+        target,
         options: {
-          colorize: isNotProduction,
+          colorize,
           hideObject: true,
           ignore: 'pid',
           levelFirst: true,
@@ -29,26 +33,26 @@ export class LoggerService implements ILoggerService {
   }
 
   debug(message: string, meta: object = {}): void {
-    this.logger.debug(message, meta);
+    this.logger.debug(`🐛 ${message}`, meta);
   }
 
   error(error: Error): void {
-    this.logger.error(error);
+    this.logger.error(`❌ ${error.message}`, { stack: error.stack, error });
   }
 
   fatal(error: Error): void {
-    this.logger.fatal(error);
+    this.logger.fatal(`💀 ${error.message}`, { stack: error.stack, error });
   }
 
   info(message: string, meta: object = {}): void {
-    this.logger.info(message, meta);
+    this.logger.info(`ℹ️ ${message}`, meta);
   }
 
   trace(message: string, meta: object = {}): void {
-    this.logger.trace(message, meta);
+    this.logger.trace(`🔍 ${message}`, meta);
   }
 
   warn(message: string, meta: object = {}): void {
-    this.logger.warn(message, meta);
+    this.logger.warn(`⚠️ ${message}`, meta);
   }
 };
