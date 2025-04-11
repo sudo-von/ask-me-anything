@@ -7,4 +7,4 @@ export interface ILoggerService {
   warn: (message: string, meta?: object) => void;
 };
 
-export type LoggerName = 'api-service' | 'data-access-service';
+export type LoggerName = 'api-service' | 'data-access-service' | 'main-service';

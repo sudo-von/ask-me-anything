@@ -1,16 +1,30 @@
-import * as App from 'app';
+
+import { DataAccessService } from '@services/data-access';
+import { ApiService } from '@services/entry-points/api';
+import { LoggerFactory } from '@services/logger';
+
+const loggerService = LoggerFactory.create('main-service');
 
 (async () => {
+  const dataAccessService = new DataAccessService();
+  const apiService = new ApiService();
+
   try {
-    await App.start();
+    await dataAccessService.init();
+    await apiService.init();
   } catch (e) {
     const error = e as Error;
-    console.error(error);
+    error.message = `Failed to start the main service: ${error.message}`;
+    loggerService.fatal(error);
+
     try {
-      await App.release();
+      console.info('Attempting to release resources.');
+      await dataAccessService.close();
+      await apiService.close();
     } catch (e) {
       const error = e as Error;
-      console.error(error);
+      error.message = `Failed to release resources: ${error.message}.`;
+      loggerService.fatal(error);
     } finally {
       process.exit(1);
     }
