@@ -18,6 +18,7 @@ export default defineConfig([
   {
     files: ['**/*.{js,mjs,cjs,ts}'],
     rules: {
+      '@typescript-eslint/no-empty-object-type': "off",
       '@typescript-eslint/no-unused-vars': [
         'warn',
         { argsIgnorePattern: '^_' },
