@@ -17,7 +17,7 @@ export const applyOpenApiMiddleware = (app: Express) =>
     pathsIgnore: /^(.*errors|.*index|.*mappers|.*test|.*types)$/,
     promiseMode: true,
     routesGlob: '**/*.{ts,js}',
-    routesIndexFileRegExp: /(?:endpoints)?\.[tj]s$/,
+    routesIndexFileRegExp: /(?:.*endpoints)?\.[tj]s$/,
     validateApiDoc: true,
   });
 

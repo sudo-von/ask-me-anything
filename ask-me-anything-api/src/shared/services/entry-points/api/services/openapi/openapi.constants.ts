@@ -1,12 +1,9 @@
 import path from 'path';
 
-export const openApiPaths = path.join(__dirname, '..', '..', 'server', 'routes');
+export const openApiPaths = path.join(process.cwd(), 'src', 'apps', 'user-app', 'entry-points', 'api', 'routes');
 
 export const openApiYaml = path.join(
-  __dirname,
-  '..',
-  '..',
-  '..',
+  process.cwd(),
   'node_modules',
   '@sudo-von',
   'ask-me-anything-core',
