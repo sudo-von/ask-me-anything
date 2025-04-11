@@ -25,10 +25,10 @@ jobs:
           terraform_version: 1.2.0
       - name: Init (Development)
         run: terraform init
-        working-directory: ./ask-me-anything-api/src/infrastructure/cloud/development
+        working-directory: ./ask-me-anything-api/src/shared/infrastructure/cloud/development
       - name: Plan (Development)
         run: terraform plan
-        working-directory: ./ask-me-anything-api/src/infrastructure/cloud/development
+        working-directory: ./ask-me-anything-api/src/shared/infrastructure/cloud/development
       - name: Apply (Development)
         run: terraform apply -auto-approve
-        working-directory: ./ask-me-anything-api/src/infrastructure/cloud/development
+        working-directory: ./ask-me-anything-api/src/shared/infrastructure/cloud/development
