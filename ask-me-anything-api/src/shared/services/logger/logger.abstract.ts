@@ -10,5 +10,10 @@ import { ILoggerService, LoggerModule } from "./logger.types";
  * configuration, transport setup, formatting, etc.
  */
 export abstract class AbstractLoggerFactory {
+  /**
+   * Creates and returns a logger service instance tied to a specific module.
+   * Implementations should ensure that the logger is properly configured.
+   * @returns An instance of `ILoggerService` ready for use.
+   */
   static create: (loggerModule: LoggerModule) => ILoggerService;
 };
