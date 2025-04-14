@@ -1,16 +1,28 @@
-import { ENVIRONMENTS } from './configuration.constants.';
+import { ENVIRONMENTS } from './configuration.constant';
 
+/**
+ * Represents the full shape of the application's configuration.
+ */
 export type Configuration = {
+  /** The current application environment. */
   ENVIRONMENT: Environment;
+
+  /** The port on which the application should run. */
   PORT: number;
+
+  /** The number of salt rounds used for hashing operations. */
   SALT_ROUNDS: number;
+
+  /** The secret key used for signing sensitive data. */
   SECRET_KEY: string;
 };
 
+/**
+ * Represents a valid key from the Configuration object.
+ */
 export type ConfigurationKey = keyof Configuration;
 
-export interface IConfigurationService {
-  get: <K extends ConfigurationKey>(configurationKey: K) => Configuration[K];
-};
-
+/**
+ * Represents the list of allowed environments.
+ */
 export type Environment = (typeof ENVIRONMENTS)[number];

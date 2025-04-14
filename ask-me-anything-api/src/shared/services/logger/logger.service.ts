@@ -9,7 +9,7 @@ import {
 } from './logger.types';
 import { ConfigurationService } from '@services/configuration';
 
-const configurationService = new ConfigurationService();
+const configurationService = ConfigurationService.getInstance();
 const environment = configurationService.get('ENVIRONMENT');
 const isProduction = environment === 'production';
 const isNotProduction = !isProduction;

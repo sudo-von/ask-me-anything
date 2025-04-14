@@ -1,3 +1,3 @@
-export * from './configuration.constants.';
+export * from './configuration.constant';
 export * from './configuration.service';
 export * from './configuration.types';

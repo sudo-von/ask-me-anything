@@ -15,5 +15,5 @@ export abstract class AbstractLoggerFactory {
    * Implementations should ensure that the logger is properly configured.
    * @returns An instance of `ILoggerService` ready for use.
    */
-  static create: (loggerModule: LoggerModule) => ILoggerService;
+  public static create: (loggerModule: LoggerModule) => ILoggerService;
 };
