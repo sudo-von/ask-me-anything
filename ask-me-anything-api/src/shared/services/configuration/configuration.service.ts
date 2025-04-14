@@ -5,6 +5,7 @@ import {
   Environment,
   ConfigurationKey,
   Configuration,
+  IConfigurationService,
 } from './configuration.types';
 import { AbstractConfiguration } from './configuration.abstract';
 import {
@@ -14,7 +15,7 @@ import {
 } from './configuration.error';
 import { ServiceInitializationError } from '@apps/apps.error';
 
-export class ConfigurationService extends AbstractConfiguration {
+export class ConfigurationService extends AbstractConfiguration implements IConfigurationService {
   private static instance: ConfigurationService;
   private configuration: Configuration;
 

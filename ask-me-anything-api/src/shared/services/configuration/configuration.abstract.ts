@@ -1,5 +1,5 @@
 import { MethodNotImplementedYetError } from "@apps/apps.error";
-import { Configuration, ConfigurationKey, Environment } from "./configuration.types";
+import { Environment } from "./configuration.types";
 
 /**
  * Acts as a static facade for accessing application configuration values.
@@ -17,15 +17,6 @@ export abstract class AbstractConfiguration {
    * Prevents direct instantiation of the abstract class.
    */
   protected constructor() { };
-
-  /**
-   * Retrieves a validated and strongly typed configuration value by key.
-   * 
-   * @returns The parsed and validated value of the requested configuration.
-   */
-  public get<K extends ConfigurationKey>(_configurationKey: K): Configuration[K] {
-    throw new MethodNotImplementedYetError('get');
-  };
 
   /**
    * Retrieves a raw configuration value as a string.

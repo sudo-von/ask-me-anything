@@ -26,3 +26,17 @@ export type ConfigurationKey = keyof Configuration;
  * Represents the list of allowed environments.
  */
 export type Environment = (typeof ENVIRONMENTS)[number];
+
+/**
+ * This interface defines the contract that any configuration service implementation 
+ * must adhere to in order to retrieve validated and strongly-typed configuration values 
+ * from the application.
+ */
+export interface IConfigurationService {
+  /**
+   * Retrieves a validated and strongly typed configuration value by key.
+   * 
+   * @returns The parsed and validated value of the requested configuration.
+   */
+  get<K extends ConfigurationKey>(_configurationKey: K): Configuration[K];
+}
