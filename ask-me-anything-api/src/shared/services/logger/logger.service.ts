@@ -55,13 +55,15 @@ export class LoggerService implements ILoggerService {
   }
 
   error(error: Error): void {
-    const formattedMessage = this.format('error', error.message);
+    const metadata: Metadata = { stack: error.stack };
+    const formattedMessage = this.format('error', error.message, metadata);
     this.logger.error(formattedMessage, { error });
   }
 
   fatal(error: Error): void {
-    const formattedMessage = this.format('fatal', error.message);
-    this.logger.error(formattedMessage, { error });
+    const metadata: Metadata = { stack: error.stack };
+    const formattedMessage = this.format('fatal', error.message, metadata);
+    this.logger.fatal(formattedMessage, { error });
   }
 
   format(type: LoggerType, message: string, metadata?: Metadata): string {
@@ -94,12 +96,12 @@ export class LoggerService implements ILoggerService {
 
   info(message: string, metadata?: Metadata): void {
     const formattedMessage = this.format('info', message, metadata);
-    this.logger.debug(formattedMessage);
+    this.logger.info(formattedMessage);
   }
 
   trace(message: string, metadata?: Metadata): void {
     const formattedMessage = this.format('trace', message, metadata);
-    this.logger.debug(formattedMessage);
+    this.logger.trace(formattedMessage);
   }
 
   warn(message: string, metadata?: Metadata): void {
