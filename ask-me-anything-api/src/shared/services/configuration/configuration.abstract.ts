@@ -16,9 +16,7 @@ export abstract class AbstractConfiguration {
   /**
    * Prevents direct instantiation of the abstract class.
    */
-  protected constructor() {
-    throw new MethodNotImplementedYetError('constructor');
-  };
+  protected constructor() { };
 
   /**
    * Retrieves a validated and strongly typed configuration value by key.

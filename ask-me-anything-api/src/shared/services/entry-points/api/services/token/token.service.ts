@@ -3,7 +3,7 @@ import { ConfigurationService } from '@services/configuration';
 import { AbstractTokenService } from './token.abstracts';
 import { DeserializedUser } from './token.types';
 
-const configurationService = new ConfigurationService();
+const configurationService = ConfigurationService.getInstance();
 const SECRET_KEY = configurationService.get('SECRET_KEY');
 
 export class TokenService extends AbstractTokenService {

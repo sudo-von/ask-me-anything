@@ -18,7 +18,7 @@ export class ConfigurationService extends AbstractConfiguration {
   private static instance: ConfigurationService;
   private configuration: Configuration;
 
-  private constructor() {
+  protected constructor() {
     super();
     this.load();
     this.configuration = {
