@@ -1,5 +1,12 @@
+import util from 'util';
 import pino, { Logger } from 'pino';
-import { ILoggerService, LoggerName } from './logger.types';
+import {
+  ILoggerService,
+  LoggerIcons,
+  LoggerModule,
+  LoggerType,
+  Metadata,
+} from './logger.types';
 import { ConfigurationService } from '@services/configuration';
 
 const configurationService = new ConfigurationService();
@@ -9,14 +16,15 @@ const isNotProduction = !isProduction;
 
 export class LoggerService implements ILoggerService {
   private logger: Logger;
+  private loggerIcons: LoggerIcons;
 
-  constructor(loggerName: LoggerName) {
+  constructor(loggerModule: LoggerModule) {
     const colorize = isNotProduction;
     const level = isProduction ? 'info' : 'debug';
     const target = isNotProduction ? 'pino-pretty' : '';
 
     this.logger = pino({
-      base: { app: loggerName },
+      base: { app: loggerModule.filename },
       level,
       transport: {
         target,
@@ -30,29 +38,72 @@ export class LoggerService implements ILoggerService {
         },
       },
     });
+
+    this.loggerIcons = {
+      debug: '🐛',
+      error: '❌',
+      fatal: '💀',
+      info: '🔍',
+      trace: '🧵',
+      warn: '⚠️',
+    };
   }
 
-  debug(message: string, meta: object = {}): void {
-    this.logger.debug(`🐛 ${message}`, meta);
+  debug(message: string, metadata?: Metadata): void {
+    const formattedMessage = this.format('debug', message, metadata);
+    this.logger.debug(formattedMessage);
   }
 
   error(error: Error): void {
-    this.logger.error(`❌ ${error.message}`, { stack: error.stack, error });
+    const formattedMessage = this.format('error', error.message);
+    this.logger.error(formattedMessage, { error });
   }
 
   fatal(error: Error): void {
-    this.logger.fatal(`💀 ${error.message}`, { stack: error.stack, error });
+    const formattedMessage = this.format('fatal', error.message);
+    this.logger.error(formattedMessage, { error });
   }
 
-  info(message: string, meta: object = {}): void {
-    this.logger.info(`ℹ️ ${message}`, meta);
+  format(type: LoggerType, message: string, metadata?: Metadata): string {
+    const loggerIcon = this.loggerIcons[type];
+
+    if (!metadata) {
+      return `${loggerIcon} ${message}`;
+    }
+
+    let formattedMetadata = '';
+    switch (typeof metadata) {
+      case 'boolean':
+        formattedMetadata = metadata ? 'true' : 'false';
+        break;
+      case 'number':
+        formattedMetadata = String(metadata);
+        break;
+      case 'object':
+        formattedMetadata = util.inspect(metadata, { depth: null, showHidden: false });
+        break;
+      case 'string':
+        formattedMetadata = metadata;
+        break;
+      default:
+        formattedMetadata = `[Invalid metadata type: ${typeof metadata}]`;
+    }
+
+    return `${loggerIcon} ${message} ${formattedMetadata}`
   }
 
-  trace(message: string, meta: object = {}): void {
-    this.logger.trace(`🔍 ${message}`, meta);
+  info(message: string, metadata?: Metadata): void {
+    const formattedMessage = this.format('info', message, metadata);
+    this.logger.debug(formattedMessage);
   }
 
-  warn(message: string, meta: object = {}): void {
-    this.logger.warn(`⚠️ ${message}`, meta);
+  trace(message: string, metadata?: Metadata): void {
+    const formattedMessage = this.format('trace', message, metadata);
+    this.logger.debug(formattedMessage);
   }
-};
+
+  warn(message: string, metadata?: Metadata): void {
+    const formattedMessage = this.format('warn', message, metadata);
+    this.logger.debug(formattedMessage);
+  }
+}
