@@ -4,7 +4,7 @@ import { UserModel } from '@user-app/data-access/models/user.model';
 import { IDataAccessService } from './data-access.types';
 import { LoggerFactory } from '@services/logger';
 
-const loggerService = LoggerFactory.create('data-access-service');
+const loggerService = LoggerFactory.create(module);
 
 export class DataAccessService implements IDataAccessService {
   connection: Sequelize;
@@ -48,13 +48,11 @@ export class DataAccessService implements IDataAccessService {
       }
 
       await this.connection.close();
-      loggerService.info('💾 Database connection closed successfully.');
+      loggerService.info('Database connection closed successfully.');
     } catch (e) {
       const error = e as Error;
       error.message = `Failed to close the database connection: ${error.message}.`;
       throw error;
     }
   };
-
 }
-
