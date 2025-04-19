@@ -35,7 +35,9 @@ export type Environment = (typeof ENVIRONMENTS)[number];
 export interface IConfigurationService {
   /**
    * Retrieves a validated and strongly typed configuration value by key.
-   * 
+   *
+   * @param configurationKey - The key used to retrieve the corresponding configuration value.
+   *
    * @returns The parsed and validated value of the requested configuration.
    */
   get<K extends ConfigurationKey>(_configurationKey: K): Configuration[K];

@@ -13,6 +13,9 @@ export abstract class AbstractLoggerFactory {
   /**
    * Creates and returns a logger service instance tied to a specific module.
    * Implementations should ensure that the logger is properly configured.
+   *
+   * @param loggerModule - The module from which the name is going to be retrieved.
+   *
    * @returns An instance of `ILoggerService` ready for use.
    */
   public static create: (loggerModule: LoggerModule) => ILoggerService;

@@ -7,6 +7,7 @@ import Module from 'module';
 export interface ILoggerService {
   /**
    * Logs a debug-level message.
+   *
    * @param message - The main log message.
    * @param metadata - Optional metadata to include.
    */
@@ -14,27 +15,32 @@ export interface ILoggerService {
 
   /**
    * Logs an error-level message.
+   *
    * @param error - The error instance to log.
    */
   error(error: Error): void;
 
   /**
    * Logs a fatal-level message.
+   *
    * @param error - The error instance to log.
    */
   fatal(error: Error): void;
 
   /**
    * Formats a log message with an icon and optional metadata.
+   *
    * @param type - The logger type representing the log level.
    * @param message - The main log message.
    * @param metadata - Optional metadata to include.
+   * 
    * @returns The formatted message.
    */
   format(type: LoggerType, message: string, metadata?: Metadata): string;
 
   /**
    * Logs an info-level message.
+   *
    * @param message - The message to log.
    * @param metadata - Optional metadata to include.
    */
@@ -42,6 +48,7 @@ export interface ILoggerService {
 
   /**
    * Logs a trace-level message (detailed execution flow).
+   *
    * @param message - The message to log.
    * @param metadata - Optional metadata to include.
    */
@@ -49,6 +56,7 @@ export interface ILoggerService {
 
   /**
    * Logs a warning-level message.
+   *
    * @param message - The message to log.
    * @param metadata - Optional metadata to include.
    */

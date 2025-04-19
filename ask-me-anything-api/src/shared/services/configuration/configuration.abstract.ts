@@ -24,6 +24,8 @@ export abstract class AbstractConfiguration {
    *
    * This method must be implemented in the concrete configuration service.
    *
+   * @param name - The requested configuration name.
+   *
    * @returns The requested configuration value.
    */
   protected getConfiguration(_name: string): string {
@@ -36,6 +38,8 @@ export abstract class AbstractConfiguration {
    *
    * This method must be implemented in the concrete configuration service.
    *
+   * @param name - The requested configuration name.
+   *
    * @returns The requested configuration value.
    */
   protected getConfigurationAsEnvironment(_name: string): Environment {
@@ -47,6 +51,8 @@ export abstract class AbstractConfiguration {
    * Validates that the value is a numeric string and returns its number representation.
    *
    * This method must be implemented in the concrete configuration service.
+   *
+   * @param name - The requested configuration name.
    *
    * @returns The requested configuration value.
    */
