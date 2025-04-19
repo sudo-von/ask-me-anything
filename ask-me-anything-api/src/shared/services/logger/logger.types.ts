@@ -29,6 +29,7 @@ export interface ILoggerService {
    * @param type - The logger type representing the log level.
    * @param message - The main log message.
    * @param metadata - Optional metadata to include.
+   * @returns The formatted message.
    */
   format(type: LoggerType, message: string, metadata?: Metadata): string;
 
