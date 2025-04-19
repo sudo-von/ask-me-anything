@@ -1,6 +1,11 @@
 import { STATUS_CODES } from './api.constants';
 import { ApiError, StatusCodeValue } from './api.types';
 
+/**
+ * Base class for API-related errors conforming to the ApiError interface.
+ *
+ * It serves as the foundation for more specific HTTP error classes.
+ */
 export class ApiBaseError extends Error implements ApiError {
   code: string;
   detail: string;
@@ -20,6 +25,12 @@ export class ApiBaseError extends Error implements ApiError {
   }
 }
 
+/**
+ * Represents a 400 Bad Request error.
+ *
+ * This error should be thrown when the server cannot process the request due to
+ * client-side issues such as validation errors or malformed input.
+ */
 export class BadRequestError extends ApiBaseError {
   constructor(error: Partial<ApiError>) {
     super({
@@ -33,6 +44,12 @@ export class BadRequestError extends ApiBaseError {
   }
 }
 
+/**
+ * Represents a 500 Internal Server Error.
+ *
+ * This error should be thrown when an unexpected failure occurs on the server
+ * that is not directly caused by the client's request.
+ */
 export class InternalServerError extends ApiBaseError {
   constructor() {
     super({
