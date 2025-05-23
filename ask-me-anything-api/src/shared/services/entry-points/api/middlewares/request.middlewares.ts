@@ -15,7 +15,7 @@ const applyHeaderMiddlewares = (app: Express) => {
 };
 
 /**
- * Applies middleware for handling incoming requests.
+ * Applies middlewares for handling incoming requests.
  */
 export const applyRequestMiddlewares = (app: Express) => {
   applyHeaderMiddlewares(app);

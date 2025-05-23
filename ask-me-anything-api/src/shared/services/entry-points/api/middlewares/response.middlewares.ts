@@ -9,7 +9,7 @@ const loggerService = LoggerFactory.create(module);
 /**
  * Middleware for formatting and returning API errors.
  *
- * - Logs the error using the appropriate log level:
+ * - Logs the error using the appropriate log level.
  * - Wraps unknown errors in a generic `InternalServerError`.
  * - Returns a standardized `ApiError` response structure.
  *

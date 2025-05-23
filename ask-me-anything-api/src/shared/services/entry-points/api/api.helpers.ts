@@ -7,8 +7,6 @@ import { StatusCodeKey } from './api.types';
  * Useful to ensure type safety when working with dynamic values that may or may not
  * match the keys of the predefined status code enumeration.
  *
- * @param statusCodeKey - The string to validate as a status code key.
- *
  * @returns `true` if the key exists, otherwise `false`.
  */
 export const isValidStatusCodeKey = (

@@ -1,10 +1,10 @@
 import express, { Express } from 'express';
 import { Server } from 'http';
-import { applyOpenApiMiddleware, applyOpenApiRequestMiddleware, applyOpenApiResponseMiddleware } from '@services/entry-points/api/openapi';
 import { IApiService } from './api.types';
 import { ConfigurationService } from '@services/configuration';
 import { applyRequestMiddlewares, applyResponseMiddlewares } from './middlewares';
 import { LoggerFactory } from '@services/logger';
+import { applyOpenApiRequestMiddlewares, applyOpenApiResponseMiddlewares } from './openapi/middlewares';
 
 const configurationService = ConfigurationService.getInstance();
 const loggerService = LoggerFactory.create(module);
@@ -22,9 +22,8 @@ export class ApiService implements IApiService {
       this.app = express();
 
       applyRequestMiddlewares(this.app);
-      applyOpenApiRequestMiddleware(this.app);
-      await applyOpenApiMiddleware(this.app);
-      applyOpenApiResponseMiddleware(this.app);
+      applyOpenApiRequestMiddlewares(this.app);
+      applyOpenApiResponseMiddlewares(this.app);
       applyResponseMiddlewares(this.app);
 
       this.server = this.app.listen(PORT, () =>
@@ -47,8 +46,11 @@ export class ApiService implements IApiService {
       }
 
       this.server.close((error) => {
-        if (error) throw error;
+        if (error) {
+          throw error;
+        }
       });
+
       loggerService.info('Server connection closed successfully.');
     } catch (e) {
       const error = e as Error;
