@@ -1,13 +1,13 @@
 import express, { Express } from 'express';
 import { Server } from 'http';
-import { applyOpenApiMiddleware, applyOpenApiRequestMiddleware, applyOpenApiResponseMiddleware } from '@services/entry-points/api/services/openapi';
+import { applyOpenApiMiddleware, applyOpenApiRequestMiddleware, applyOpenApiResponseMiddleware } from '@services/entry-points/api/openapi';
 import { IApiService } from './api.types';
 import { ConfigurationService } from '@services/configuration';
-import { applyRequestMiddleware, applyResponseMiddleware } from './api.middlewares';
+import { applyRequestMiddlewares, applyResponseMiddlewares } from './middlewares';
 import { LoggerFactory } from '@services/logger';
 
-const configurationService = new ConfigurationService();
-const loggerService = LoggerFactory.create('api-service');
+const configurationService = ConfigurationService.getInstance();
+const loggerService = LoggerFactory.create(module);
 
 const PORT = configurationService.get('PORT');
 
@@ -21,11 +21,11 @@ export class ApiService implements IApiService {
 
       this.app = express();
 
-      applyRequestMiddleware(this.app);
+      applyRequestMiddlewares(this.app);
       applyOpenApiRequestMiddleware(this.app);
-      applyOpenApiMiddleware(this.app);
+      await applyOpenApiMiddleware(this.app);
       applyOpenApiResponseMiddleware(this.app);
-      applyResponseMiddleware(this.app);
+      applyResponseMiddlewares(this.app);
 
       this.server = this.app.listen(PORT, () =>
         loggerService.info(
