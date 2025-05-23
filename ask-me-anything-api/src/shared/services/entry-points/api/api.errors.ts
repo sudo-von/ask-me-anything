@@ -32,14 +32,33 @@ export class ApiBaseError extends Error implements ApiError {
  * client-side issues such as validation errors or malformed input.
  */
 export class BadRequestError extends ApiBaseError {
-  constructor(error: Partial<ApiError>) {
+  constructor(error: Partial<Omit<ApiError, 'status'>>) {
     super({
       code: error.code || 'BAD_REQUEST_ERROR',
       detail:
         error.detail ||
         'The request could not be processed due to invalid input. Please check the provided data.',
-      status: error.status || STATUS_CODES.BAD_REQUEST,
+      status: STATUS_CODES.BAD_REQUEST,
       title: error.title || 'There was an error while validating the request.',
+    });
+  }
+}
+
+/**
+ * Represents a 409 Conflict error.
+ *
+ * This error should be thrown when a request could not be completed due to a conflict with the current state of the resource.
+ * Common use cases include duplicate entries, version conflicts, or violations of business rules.
+ */
+export class ConflictError extends ApiBaseError {
+  constructor(error: Partial<Omit<ApiError, 'status'>>) {
+    super({
+      code: error.code || 'CONFLICT_ERROR',
+      detail:
+        error.detail ||
+        'The request could not be completed due to a conflict with the current state of the resource.',
+      status: STATUS_CODES.CONFLICT,
+      title: error.title || 'Conflict detected while processing the request.',
     });
   }
 }
