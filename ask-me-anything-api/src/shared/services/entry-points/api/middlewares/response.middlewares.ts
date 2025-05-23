@@ -15,7 +15,7 @@ const loggerService = LoggerFactory.create(module);
  *
  * This middleware must be registered **after** all route handlers.
  */
-const applyErrorMiddleware = (app: Express) => {
+const applyErrorMiddlewares = (app: Express) => {
   app.use(
     (
       error: Error,
@@ -49,5 +49,5 @@ const applyErrorMiddleware = (app: Express) => {
  * Applies middleware for handling outgoing responses.
  */
 export const applyResponseMiddlewares = (app: Express) => {
-  applyErrorMiddleware(app);
+  applyErrorMiddlewares(app);
 };
