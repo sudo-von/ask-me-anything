@@ -13,6 +13,9 @@ importers:
       '@sudo-von/ask-me-anything-core':
         specifier: workspace:*
         version: link:../ask-me-anything-core
+      '@sudo-von/ask-me-anything-shared-api':
+        specifier: workspace:*
+        version: link:../ask-me-anything-shared-api
       bcrypt:
         specifier: ~5.1.1
         version: 5.1.1
@@ -104,6 +107,12 @@ importers:
       typescript:
         specifier: ~5.7.3
         version: 5.7.3
+
+  ../../ask-me-anything-shared-api:
+    dependencies:
+      typescript:
+        specifier: ~5.8.3
+        version: 5.8.3
 
 packages:
 
@@ -3488,6 +3497,12 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
     dev: true
+
+  /typescript@5.8.3:
+    resolution: {integrity: sha512-p1diW6TqL9L07nNxvRMM7hMMw4c5XOo/1ibL4aAIGmSAt9slTE1Xgw5KWuof2uTOvCg9BY7ZRi+GaF+7sfgPeQ==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+    dev: false
 
   /undici-types@6.20.0:
     resolution: {integrity: sha512-Ny6QZ2Nju20vw1SRHe3d9jVu6gJ+4e3+MMpqu7pqE5HT6WsTSlce++GQmK5UXS8mzV8DSYHrQH+Xrf2jVcuKNg==}
