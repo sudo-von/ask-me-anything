@@ -1,0 +1,17 @@
+{
+  "name": "@sudo-von/ask-me-anything-shared-api",
+  "version": "1.0.0",
+  "description": "Shared TypeScript types, interfaces, and API contracts used across the Ask Me Anything monorepo.",
+  "keywords": ["ask-me-anything", "shared-api"],
+  "license": "ISC",
+  "author": "Jesús Ángel Rodríguez Martínez",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "npm run start:build",
+    "start:build": "tsc"
+  },
+  "dependencies": {
+    "typescript": "~5.8.3"
+  }
+}

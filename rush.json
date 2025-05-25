@@ -449,6 +449,11 @@
       "packageName": "@sudo-von/ask-me-anything-api",
       "projectFolder": "ask-me-anything-api",
       "tags": ["api"]
+    },
+    {
+      "packageName": "@sudo-von/ask-me-anything-shared-api",
+      "projectFolder": "ask-me-anything-shared-api",
+      "tags": ["shared-api"]
     }
   ]
 }
